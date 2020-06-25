@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import MapField from "./MapField";
+
 import './createnew.css';
+
 function Createnew() {
   const [Answers, setAnswers] = useState({
     // location related
-    name: null,
+    name: "",
     position: null,
-    latitude: null,
-    longitude: null,
+    latitude: 0,
+    longitude: 0,
     // AR related
     AR_overlay: null,
     // VR related
@@ -40,6 +43,16 @@ function Createnew() {
     setURL(generateURL());
   };
 
+  const handleLocation = (lat, lng) => {
+    setAnswers({ ...Answers, 
+      ...{
+        latitude: lat,
+        longitude: lng 
+      }
+    });
+  }
+  
+
   return (
     <div className="newConfigMain">
       <div className="header">
@@ -47,28 +60,30 @@ function Createnew() {
       </div>
 
       Name :
-      <input 
+      <input
         type="text" placeholder="enter name"
         value={Answers.name}
         onChange={e => handleChange("name", e.target.value)}
       />
       <br />
 
-      <textarea
-        name='userConfigData' rows="10" cols="70" placeholder=" MAP "
+      <MapField 
+        handleLocation={handleLocation}
+        currentLatitude={Answers.latitude}
+        currentLongitude={Answers.longitude}
       />
       <br />
 
       Latitude :
       <input
         type="number" placeholder="enter latitude"
-        value={Answers.latitude}
+        value={Answers.latitude != null ? Answers.latitude : ""}
         onChange={e => handleChange("latitude", e.target.value)}
       />
 
       Longitude :
       <input type="number" placeholder="enter longitude"
-        value={Answers.longitude}
+        value={Answers.longitude != null ? Answers.longitude : ""}
         onChange={e => handleChange("longitude", e.target.value)}
       />
       <br />
@@ -91,4 +106,5 @@ function Createnew() {
     </div>
   );
 }
+
 export default Createnew;
