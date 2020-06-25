@@ -47,20 +47,24 @@ function Createnew() {
       </div>
 
       Name :
-      <input type="text" placeholder="enter name"
+      <input 
+        type="text" placeholder="enter name"
         value={Answers.name}
         onChange={e => handleChange("name", e.target.value)}
       />
       <br />
 
-      <textarea name='userConfigData' rows="10" cols="70"
-        placeholder=" MAP " />
+      <textarea
+        name='userConfigData' rows="10" cols="70" placeholder=" MAP "
+      />
       <br />
 
       Latitude :
-      <input type="number" placeholder="enter latitude"
+      <input
+        type="number" placeholder="enter latitude"
         value={Answers.latitude}
-        onChange={e => handleChange("latitude", e.target.value)} />
+        onChange={e => handleChange("latitude", e.target.value)}
+      />
 
       Longitude :
       <input type="number" placeholder="enter longitude"
@@ -71,13 +75,16 @@ function Createnew() {
 
       Image :
       <input
-        type="file" placeholder="select image" accept="image/png, image/jpeg"
+        type="file" placeholder="select image" accept="image/*"
         onChange={e => handleChange("image", e.target.value)}
       />
+      <br />
 
       Audio :
-      <input type="file" placeholder="select audio" accept="audio/*"
-        onChange={e => handleChange("audio", e.target.value)}></input>
+      <input
+        type="file" placeholder="select audio" accept="audio/*"
+        onChange={e => handleChange("audio", e.target.value)}
+      />
       <br />
 
       {downloadURL && (<a href={downloadURL} download="markers.json">Download File</a>)}
