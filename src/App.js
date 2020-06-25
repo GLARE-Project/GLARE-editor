@@ -1,30 +1,28 @@
 import React from 'react';
-
+import './App.css';
+import Home from "./pages/home/Home.js";
+import Createnew from "./pages/createnew/Createnew.js";
+import Updateold from "./pages/updateold/Updateold.js";
+import {Switch, Route, NavLink} from 'react-router-dom';
 function App() {
-
-  // example data
-  var exampleData = {
-    'hotspots': [{
-      'name': 'Victory Bell',
-      'latitude': 41.150186857592914,
-      'longitude': -81.34437203407289
-    }]
-  };
-
-  // we turn that json into a single string
-  var jsonData = JSON.stringify(exampleData);
-  // turn it into a blob object
-  var blob = new Blob([jsonData], {type: "application/json"})
-  // create blob url for the browser to download
-  var url  = URL.createObjectURL(blob);
-
-  return (
-    <div className="App">
-      <a href={url} download={'markers.json'}>
-        Download File
-      </a>
+  return(
+    <div className="app">
+      <nav>
+    <h1>GLARE Configuration Editor</h1>
+    <ul>
+    <li><NavLink to='/'>Home</NavLink></li>
+    <li><NavLink to='/createnew'>Create New</NavLink></li>
+    <li><NavLink to='/updateold'>Update Existing</NavLink></li>
+    </ul>
+    </nav>
+    <main>
+      <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/createnew" component={Createnew}/>
+      <Route exact path="/updateold" component={Updateold} />
+      </Switch>
+    </main>
     </div>
-  );
+  )
 }
-
 export default App;
