@@ -1,65 +1,68 @@
 import React, { useState } from 'react';
 import MapField from "./MapField";
+import LibraryField from "./LibraryField";
 
-import './createnew.css';
 
-function Createnew() {
+import './CreateLocation.css';
+
+function CreateLocation( { handleProjectSave, index } ) {
   const [Answers, setAnswers] = useState({
     // location related
     name: "",
-    position: null,
+    position: index + 1,
     latitude: 0,
     longitude: 0,
     // AR related
-    AR_overlay: null,
+    AR_overlay: "",
     // VR related
-    panorama_image: null,
-    VR_overylay: null,
+    panorama_image: "",
+    VR_overylay: "",
     overlay_size: 10,
     overlay_offset_x: 0,
     overlay_offset_y: 0,
     // audio related
-    audio: null
+    start_audio: "",
+    // the links
+    main_pages: [],
+    // the library
+    media_pages: []
   });
-
-  const [downloadURL, setURL] = useState(null);
-
-
-  // generate the download URL
-  const generateURL = () => {
-    const jsonData = JSON.stringify(Answers);
-    // turn it into a blob object
-    const blob = new Blob([jsonData], { type: "application/json" })
-    // create blob url for the browser to download
-    return URL.createObjectURL(blob);
-  };
-
 
   // if a value is changed it must:
   const handleChange = (objectName, value) => {
     // set the new answer value
-    setAnswers({ ...Answers, ...{ [objectName]: value } });
-    // regenerate the URL
-    setURL(generateURL());
+    const newAnswer = { ...Answers, ...{ [objectName]: value } };
+    setAnswers(newAnswer);
+    handleProjectSave(newAnswer);
   };
 
   const handleLocation = (lat, lng) => {
-    setAnswers({ ...Answers, 
+    const newAnswer = { ...Answers, 
       ...{
         latitude: lat,
         longitude: lng 
       }
-    });
+    };
+    setAnswers(newAnswer);
+    handleProjectSave(newAnswer);
   }
-  
 
+  const handleLibrary = (data) => {
+    const newAnswer = { ...Answers, 
+      ...{
+        media_pages: data
+      }
+    };
+    setAnswers(newAnswer);
+    handleProjectSave(newAnswer);
+  };
+  
   return (
     <div className="newConfigMain">
-      <div className="header">
-        <h3>Please feel free to add a new configuration below!</h3>
-      </div>
+      <div>Position #{Answers.position} </div>
+      <br />
 
-      Name :
+      Hotspot name:
       <input
         type="text" placeholder="enter name"
         value={Answers.name}
@@ -74,37 +77,53 @@ function Createnew() {
       />
       <br />
 
-      Latitude :
+      Latitude:
       <input
         type="number" placeholder="enter latitude"
         value={Answers.latitude != null ? Answers.latitude : ""}
         onChange={e => handleChange("latitude", e.target.value)}
       />
 
-      Longitude :
+      Longitude:
       <input type="number" placeholder="enter longitude"
         value={Answers.longitude != null ? Answers.longitude : ""}
         onChange={e => handleChange("longitude", e.target.value)}
       />
       <br />
 
-      Image :
+      AR Overlay:
       <input
         type="file" placeholder="select image" accept="image/*"
-        onChange={e => handleChange("image", e.target.value)}
+        onChange={e => handleChange("AR_overlay", e.target.files[0]['name'])}
       />
       <br />
 
-      Audio :
+      Panorama image:
+      <input
+        type="file" placeholder="select image" accept="image/*"
+        onChange={e => handleChange("panorama_image", e.target.files[0]['name'])}
+      />
+      <br />
+
+      VR Overlay:
+      <input
+        type="file" placeholder="select image" accept="image/*"
+        onChange={e => handleChange("VR_overylay", e.target.files[0]['name'])}
+      />
+      <br />
+
+      Narration Audio:
       <input
         type="file" placeholder="select audio" accept="audio/*"
-        onChange={e => handleChange("audio", e.target.value)}
+        onChange={e => handleChange("start_audio", e.target.files[0]['name'])}
       />
       <br />
 
-      {downloadURL && (<a href={downloadURL} download="markers.json">Download File</a>)}
+
+      <LibraryField handleLibrarySave={handleLibrary} />
+
     </div>
   );
 }
 
-export default Createnew;
+export default CreateLocation;

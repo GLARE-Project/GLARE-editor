@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Home from "./pages/home/Home.js";
-import Createnew from "./pages/createnew/Createnew.js";
-import Updateold from "./pages/updateold/Updateold.js";
+import Home from "./pages/home/Home";
+import CreateProject from "./pages/CreateProject/CreateProject";
+import Updateold from "./pages/updateold/Updateold";
 import { Switch, Route, NavLink } from 'react-router-dom';
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/createnew" component={Createnew} />
+          <Route exact path="/createnew" component={CreateProject} />
           <Route exact path="/updateold" component={Updateold} />
         </Switch>
       </main>

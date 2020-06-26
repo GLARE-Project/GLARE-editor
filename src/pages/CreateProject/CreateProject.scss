@@ -1,0 +1,27 @@
+.CreateProject {
+    .locationCtn {
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap;
+
+        .locationBtn {
+            display: flex;
+            margin: 2em;
+            width: 50%;
+            height: 5em;
+            background-color: #ccc;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .locationQuestions {
+            width: 100%;
+            .newConfigMain {
+                margin: 2em 0;
+            }
+        }
+
+    }
+}
+
