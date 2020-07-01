@@ -45,30 +45,36 @@ const CreateProject = () => {
 
     return (
         <div className="CreateProject">
-            Project Name :
-            <input
-                type="text" placeholder="enter project name"
-                value={Answers.project_name}
-                onChange={e => handleChange("project_name", e.target.value)}
-            />
-            <div className="locationCtn">
-                <div className="locationBtn" onClick={addProject}>Create Location</div>
-                <div className="locationQuestions">
-                    {Answers.hotspots.map((location, index) => {
-                        return (
-                            <div key={index} >
-                                <CreateLocation 
-                                    handleProjectSave={answer => updateProject(index, answer)}
-                                    index={index}
-                                />
-                            </div>
-                        )
+            <form class="pure-form pure-form-aligned">
 
-                    })}
+                <div class="pure-control-group">
+                    <label for="project-name">Project Name</label>
+                    <input
+                        type="text" id="project-name" placeholder="enter project name"
+                        value={Answers.project_name}
+                        onChange={e => handleChange("project_name", e.target.value)}
+                    />
                 </div>
-            </div>
-            <br />
-            {downloadURL && (<a href={downloadURL} download="markers.json">Download File</a>)}
+
+                <div className="locationCtn">
+                    <div className="locationBtn" onClick={addProject}>Create Location</div>
+                    <div className="locationQuestions">
+                        {Answers.hotspots.map((location, index) => {
+                            return (
+                                <div key={index} >
+                                    <CreateLocation
+                                        handleProjectSave={answer => updateProject(index, answer)}
+                                        index={index}
+                                    />
+                                </div>
+                            )
+
+                        })}
+                    </div>
+                </div>
+                <br />
+                {downloadURL && (<a href={downloadURL} download="markers.json">Download File</a>)}
+            </form>
         </div>
     )
 };

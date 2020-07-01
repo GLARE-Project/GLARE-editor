@@ -11,7 +11,7 @@ const LibraryField = ({ handleLibrarySave }) => {
     const [pictures, SetPictures] = useState([]);
     const [audio, SetAudio] = useState([]);
     const [links, SetLinks] = useState([]);
-    
+
 
     const handleSelect = (e) => {
         setContent(e.target.value);
@@ -19,7 +19,7 @@ const LibraryField = ({ handleLibrarySave }) => {
 
     const handlePicture = (index, type, e) => {
         let old = pictures;
-        
+
         if (type === "image") {
             old[index].item = e.target.files[0]['name'];
         } else {
@@ -33,7 +33,7 @@ const LibraryField = ({ handleLibrarySave }) => {
 
     const handleAudio = (index, type, e) => {
         let old = audio;
-        
+
         if (type === "audio") {
             old[index].item = e.target.files[0]['name'];
         } else {
@@ -47,7 +47,7 @@ const LibraryField = ({ handleLibrarySave }) => {
 
     const handleLink = (index, type, e) => {
         let old = links;
-        
+
         if (type === "link") {
             old[index].item = e.target.value;
         } else {
@@ -100,79 +100,112 @@ const LibraryField = ({ handleLibrarySave }) => {
 
     return (
         <div>
-            <div>Select Content Type:</div>
-
-            <select name="content" onChange={handleSelect} value={selectedContent}>
-                {contentTypes.map((contentName, index) => {
-                    return (<option key={index} value={index}>{contentName}</option>)
-                })}
-            </select>
-
-            <button onClick={createContent}>Create Content</button>
-
-            {pictures.length > 0 && <h2>Pictures:</h2>}
-            {pictures.map((picture, index) => {
-                return (
-                    <div key={index}>
-                        <input
-                            type="file" placeholder="select image" accept="image/*"
-                            onChange={e => handlePicture(index, "image", e)}
-                        />
-
-                        <br />
-
-                        <input
-                            type="text" placeholder="enter description"
-                            onChange={e => handlePicture(index, "description", e)}
-                        />
-
-                        <br />
+            <form class="pure-form">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="content-type">Content Type</label>
+                        <select name="content" id="content-type" onChange={handleSelect} value={selectedContent}>
+                            {contentTypes.map((contentName, index) => {
+                                return (<option key={index} value={index}>{contentName}</option>)
+                            })}
+                        </select>
                     </div>
-                )
-            })}
-
-            {audio.length > 0 && <h2>Audio:</h2>}
-            {audio.map((audioObj, index) => {
-                return (
-                    <div key={index}>
-                        <input
-                            type="file" placeholder="select image" accept="audio/*"
-                            onChange={e => handleAudio(index, "audio", e)}
-                        />
-
-                        <br />
-
-                        <input
-                            type="text" placeholder="enter description"
-                            onChange={e => handleAudio(index, "description", e)}
-                        />
-
-                        <br />
+                    <div class="pure-controls">
+                        <button type="button" class="pure-button" onClick={createContent}>Create Content</button>
                     </div>
-                )
-            })}
+                </fieldset>
+            </form>
 
 
-            {links.length > 0 && <h2>Links:</h2>}
-            {links.map((link, index) => {
-                return (
-                    <div key={index}>
-                        <input
-                            type="text" placeholder="enter link"
-                            onChange={e => handleLink(index, "link", e)}
-                        />
+            <form class="pure-form">
+                <fieldset>
+                    {pictures.length > 0 && <legend>Pictures</legend>}
+                    {pictures.map((picture, index) => {
+                        return (
+                            <div key={index}>
 
-                        <br />
+                                <div class="pure-control-group">
+                                    <label for="content-image">Content Image</label>
+                                    <input
+                                        type="file" id="content-image" placeholder="select image" accept="image/*"
+                                        onChange={e => handlePicture(index, "image", e)}
+                                    />
+                                </div>
 
-                        <input
-                            type="text" placeholder="enter description"
-                            onChange={e => handleLink(index, "description", e)}
-                        />
+                                <div class="pure-control-group">
+                                    <label for="content-descript">Content Description</label>
+                                    <input
+                                        type="text" id="picture-descript" placeholder="enter description"
+                                        onChange={e => handlePicture(index, "description", e)}
+                                    />
 
-                        <br />
-                    </div>
-                )
-            })}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </fieldset>
+            </form>
+
+
+            <form class="pure-form">
+                <fieldset>
+                    {audio.length > 0 && <legend>Audio</legend>}
+                    {audio.map((audioObj, index) => {
+                        return (
+                            <div key={index}>
+
+                                <div class="pure-control-group">
+                                    <label for="content-audio">Content Audio</label>
+                                    <input
+                                        type="file" id="content-audio" placeholder="select image" accept="audio/*"
+                                        onChange={e => handleAudio(index, "audio", e)}
+                                    />
+                                </div>
+
+                                <div class="pure-control-group">
+                                    <label for="audio-descript">Content Description</label>
+                                    <input
+                                        type="text" id="audio-descript" placeholder="enter description"
+                                        onChange={e => handleAudio(index, "description", e)}
+                                    />
+                                </div>
+
+                            </div>
+                        )
+                    })}
+                </fieldset>
+            </form>
+
+
+            <form class="pure-form">
+                <fieldset>
+                    {links.length > 0 && <legend>Links</legend>}
+                    {links.map((link, index) => {
+                        return (
+                            <div key={index}>
+
+                                <div class="pure-control-group">
+                                    <label for="content-link">Content Link</label>
+                                    <input
+                                        type="text" id="content-link" placeholder="enter link"
+                                        onChange={e => handleLink(index, "link", e)}
+                                    />
+                                </div>
+
+
+                                <div class="pure-control-group">
+                                    <label for="link-descript">Content Description</label>
+                                    <input
+                                        type="text" id="link-descript" placeholder="enter description"
+                                        onChange={e => handleLink(index, "description", e)}
+                                    />
+                                </div>
+
+                            </div>
+                        )
+                    })}
+                </fieldset>
+            </form>
 
         </div>
     )
