@@ -6,6 +6,8 @@ const CreateProject = () => {
 
     const [Answers, setAnswers] = useState({
         project_name: "",
+        intro_audio: "",
+        homepage_image: "",
         hotspots: [],
         // up to for links to be displayed
         links: []
@@ -43,6 +45,17 @@ const CreateProject = () => {
         setURL(generateURL());
     };
 
+    // create the file list, so the fileName can be set
+    // this is to be used to set the file input types
+    // ex: input.files = new createFileList('image.png')
+    const createFileList = (fileName) => {
+        var fileListObj = new DataTransfer();
+        if (fileListObj) {
+            fileListObj.items.add(new File([''], fileName))
+        }
+        return fileListObj.files
+    };
+
     return (
         <div className="CreateProject">
             <form className="pure-form pure-form-aligned">
@@ -53,6 +66,22 @@ const CreateProject = () => {
                         type="text" id="project-name" placeholder="enter project name"
                         value={Answers.project_name}
                         onChange={e => handleChange("project_name", e.target.value)}
+                    />
+                </div>
+
+                <div className="pure-control-group">
+                    <label htmlFor="intro-audio">Introduction Audio</label>
+                    <input
+                        type="file" id="intro-audio" accept="audio/*"
+                        onChange={e => handleChange("intro_audio", e.target.files[0]['name'])}
+                    />
+                </div>
+
+                <div className="pure-control-group">
+                    <label htmlFor="homepage-img">Homepage Image</label>
+                    <input
+                        type="file" id="homepage-img" accept="image/*"  name="file.jpg"
+                        onChange={e => handleChange("homepage_image", e.target.files[0]['name'])}
                     />
                 </div>
 

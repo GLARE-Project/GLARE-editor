@@ -38,7 +38,7 @@ const MapField = ({ handleLocation, currentLatitude, currentLongitude }) => {
   return (
     <React.Fragment>
       <LeafletMap 
-        style={{height: '20em'}}
+        style={{height: '20em', margin: '1em 0'}}
         center={position} zoom={zoom}
         onClick={changeLocation}
         ref={mapRef}
