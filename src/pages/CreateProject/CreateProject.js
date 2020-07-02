@@ -49,10 +49,9 @@ const CreateProject = () => {
     // this is to be used to set the file input types
     // ex: input.files = new createFileList('image.png')
     const createFileList = (fileName) => {
-        var fileListObj = new DataTransfer();
-        if (fileListObj) {
-            fileListObj.items.add(new File([''], fileName))
-        }
+        let fileListObj = new DataTransfer();
+        // if the fileName passed add that file
+        if (fileName) fileListObj.items.add(new File([''], fileName))
         return fileListObj.files
     };
 
@@ -80,7 +79,7 @@ const CreateProject = () => {
                 <div className="pure-control-group">
                     <label htmlFor="homepage-img">Homepage Image</label>
                     <input
-                        type="file" id="homepage-img" accept="image/*"  name="file.jpg"
+                        type="file" id="homepage-img" accept="image/*" name="file.jpg"
                         onChange={e => handleChange("homepage_image", e.target.files[0]['name'])}
                     />
                 </div>
