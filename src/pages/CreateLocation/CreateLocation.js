@@ -61,12 +61,10 @@ function CreateLocation({ handleProjectSave, index }) {
 
   return (
     <div className="newConfigMain">
-      <form class="pure-form">
-        <fieldset>
           <legend>Position #{Answers.position} </legend>
 
-          <div class="pure-control-group">
-            <label for="hotspot-name">Hotspot name</label>
+          <div className="pure-control-group">
+            <label htmlFor="hotspot-name">Hotspot name</label>
             <input
               type="text" id="hotspot-name" placeholder="enter name"
               value={Answers.name}
@@ -80,8 +78,8 @@ function CreateLocation({ handleProjectSave, index }) {
             currentLongitude={Answers.longitude}
           />
 
-          <div class="pure-control-group">
-            <label for="latitude">Latitude</label>
+          <div className="pure-control-group">
+            <label htmlFor="latitude">Latitude</label>
             <input
               type="number" id="latitude" placeholder="enter latitude"
               value={Answers.latitude != null ? Answers.latitude : ""}
@@ -89,8 +87,8 @@ function CreateLocation({ handleProjectSave, index }) {
             />
           </div>
 
-          <div class="pure-control-group">
-            <label for="longitude">Longitude</label>
+          <div className="pure-control-group">
+            <label htmlFor="longitude">Longitude</label>
             <input
               type="number" id="longitude" placeholder="enter longitude"
               value={Answers.longitude != null ? Answers.longitude : ""}
@@ -99,8 +97,8 @@ function CreateLocation({ handleProjectSave, index }) {
           </div>
 
 
-          <div class="pure-control-group">
-            <label for="ar-overlay">AR Overlay</label>
+          <div className="pure-control-group">
+            <label htmlFor="ar-overlay">AR Overlay</label>
             <input
               type="file" id="ar-overlay" placeholder="select image" accept="image/*"
               onChange={e => handleChange("AR_overlay", e.target.files[0]['name'])}
@@ -108,8 +106,8 @@ function CreateLocation({ handleProjectSave, index }) {
           </div>
 
 
-          <div class="pure-control-group">
-            <label for="panorama-img">Panorama image</label>
+          <div className="pure-control-group">
+            <label htmlFor="panorama-img">Panorama image</label>
             <input
               type="file" id="panorama-img" placeholder="select image" accept="image/*"
               onChange={e => handleChange("panorama_image", e.target.files[0]['name'])}
@@ -117,16 +115,16 @@ function CreateLocation({ handleProjectSave, index }) {
           </div>
 
 
-          <div class="pure-control-group">
-            <label for="vr-overlay">VR Overlay</label>
+          <div className="pure-control-group">
+            <label htmlFor="vr-overlay">VR Overlay</label>
             <input
               type="file" id="vr-overlay" placeholder="select image" accept="image/*"
               onChange={e => handleChange("VR_overylay", e.target.files[0]['name'])}
             />
           </div>
 
-          <div class="pure-control-group">
-            <label for="narration-audio">Narration Audio</label>
+          <div className="pure-control-group">
+            <label htmlFor="narration-audio">Narration Audio</label>
             <input
               type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
               onChange={e => handleChange("start_audio", e.target.files[0]['name'])}
@@ -134,9 +132,6 @@ function CreateLocation({ handleProjectSave, index }) {
           </div>
 
           <LibraryField handleLibrarySave={handleLibrary} />
-
-        </fieldset>
-      </form>
     </div>
   );
 }

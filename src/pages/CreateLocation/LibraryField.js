@@ -99,115 +99,97 @@ const LibraryField = ({ handleLibrarySave }) => {
     };
 
     return (
-        <div>
-            <form class="pure-form">
-                <fieldset>
-                    <div class="pure-control-group">
-                        <label for="content-type">Content Type</label>
-                        <select name="content" id="content-type" onChange={handleSelect} value={selectedContent}>
-                            {contentTypes.map((contentName, index) => {
-                                return (<option key={index} value={index}>{contentName}</option>)
-                            })}
-                        </select>
-                    </div>
-                    <div class="pure-controls">
-                        <button type="button" class="pure-button" onClick={createContent}>Create Content</button>
-                    </div>
-                </fieldset>
-            </form>
-
-
-            <form class="pure-form">
-                <fieldset>
-                    {pictures.length > 0 && <legend>Pictures</legend>}
-                    {pictures.map((picture, index) => {
-                        return (
-                            <div key={index}>
-
-                                <div class="pure-control-group">
-                                    <label for="content-image">Content Image</label>
-                                    <input
-                                        type="file" id="content-image" placeholder="select image" accept="image/*"
-                                        onChange={e => handlePicture(index, "image", e)}
-                                    />
-                                </div>
-
-                                <div class="pure-control-group">
-                                    <label for="content-descript">Content Description</label>
-                                    <input
-                                        type="text" id="picture-descript" placeholder="enter description"
-                                        onChange={e => handlePicture(index, "description", e)}
-                                    />
-
-                                </div>
-                            </div>
-                        )
+        <React.Fragment>
+            <div className="pure-control-group">
+                <label htmlFor="content-type">Content Type</label>
+                <select name="content" id="content-type" onChange={handleSelect} value={selectedContent}>
+                    {contentTypes.map((contentName, index) => {
+                        return (<option key={index} value={index}>{contentName}</option>)
                     })}
-                </fieldset>
-            </form>
+                </select>
+            </div>
+            <div className="pure-controls">
+                <button type="button" className="pure-button" onClick={createContent}>Create Content</button>
+            </div>
 
 
-            <form class="pure-form">
-                <fieldset>
-                    {audio.length > 0 && <legend>Audio</legend>}
-                    {audio.map((audioObj, index) => {
-                        return (
-                            <div key={index}>
+            {pictures.length > 0 && <legend>Pictures</legend>}
+            {pictures.map((picture, index) => {
+                return (
+                    <React.Fragment key={index}>
 
-                                <div class="pure-control-group">
-                                    <label for="content-audio">Content Audio</label>
-                                    <input
-                                        type="file" id="content-audio" placeholder="select image" accept="audio/*"
-                                        onChange={e => handleAudio(index, "audio", e)}
-                                    />
-                                </div>
+                        <div className="pure-control-group">
+                            <label htmlFor="content-image">Content Image</label>
+                            <input
+                                type="file" id="content-image" placeholder="select image" accept="image/*"
+                                onChange={e => handlePicture(index, "image", e)}
+                            />
+                        </div>
 
-                                <div class="pure-control-group">
-                                    <label for="audio-descript">Content Description</label>
-                                    <input
-                                        type="text" id="audio-descript" placeholder="enter description"
-                                        onChange={e => handleAudio(index, "description", e)}
-                                    />
-                                </div>
+                        <div className="pure-control-group">
+                            <label htmlFor="content-descript">Content Description</label>
+                            <input
+                                type="text" id="picture-descript" placeholder="enter description"
+                                onChange={e => handlePicture(index, "description", e)}
+                            />
 
-                            </div>
-                        )
-                    })}
-                </fieldset>
-            </form>
+                        </div>
+                    </React.Fragment>
+                )
+            })}
+
+            {audio.length > 0 && <legend>Audio</legend>}
+            {audio.map((audioObj, index) => {
+                return (
+                    <React.Fragment key={index}>
+
+                        <div className="pure-control-group">
+                            <label htmlFor="content-audio">Content Audio</label>
+                            <input
+                                type="file" id="content-audio" placeholder="select image" accept="audio/*"
+                                onChange={e => handleAudio(index, "audio", e)}
+                            />
+                        </div>
+
+                        <div className="pure-control-group">
+                            <label htmlFor="audio-descript">Content Description</label>
+                            <input
+                                type="text" id="audio-descript" placeholder="enter description"
+                                onChange={e => handleAudio(index, "description", e)}
+                            />
+                        </div>
+
+                    </React.Fragment>
+                )
+            })}
+
+            {links.length > 0 && <legend>Links</legend>}
+            {links.map((link, index) => {
+                return (
+                    <React.Fragment key={index}>
+
+                        <div className="pure-control-group">
+                            <label htmlFor="content-link">Content Link</label>
+                            <input
+                                type="text" id="content-link" placeholder="enter link"
+                                onChange={e => handleLink(index, "link", e)}
+                            />
+                        </div>
 
 
-            <form class="pure-form">
-                <fieldset>
-                    {links.length > 0 && <legend>Links</legend>}
-                    {links.map((link, index) => {
-                        return (
-                            <div key={index}>
+                        <div className="pure-control-group">
+                            <label htmlFor="link-descript">Content Description</label>
+                            <input
+                                type="text" id="link-descript" placeholder="enter description"
+                                onChange={e => handleLink(index, "description", e)}
+                            />
+                        </div>
 
-                                <div class="pure-control-group">
-                                    <label for="content-link">Content Link</label>
-                                    <input
-                                        type="text" id="content-link" placeholder="enter link"
-                                        onChange={e => handleLink(index, "link", e)}
-                                    />
-                                </div>
+                    </React.Fragment>
+                )
+            })}
 
-
-                                <div class="pure-control-group">
-                                    <label for="link-descript">Content Description</label>
-                                    <input
-                                        type="text" id="link-descript" placeholder="enter description"
-                                        onChange={e => handleLink(index, "description", e)}
-                                    />
-                                </div>
-
-                            </div>
-                        )
-                    })}
-                </fieldset>
-            </form>
-
-        </div>
+        </React.Fragment>
     )
 
 }

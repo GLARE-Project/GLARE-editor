@@ -45,10 +45,10 @@ const CreateProject = () => {
 
     return (
         <div className="CreateProject">
-            <form class="pure-form pure-form-aligned">
+            <form className="pure-form pure-form-aligned">
 
-                <div class="pure-control-group">
-                    <label for="project-name">Project Name</label>
+                <div className="pure-control-group">
+                    <label htmlFor="project-name">Project Name</label>
                     <input
                         type="text" id="project-name" placeholder="enter project name"
                         value={Answers.project_name}
