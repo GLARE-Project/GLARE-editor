@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapField from "./MapField";
 import LibraryField from "./LibraryField";
 
 
 import './CreateLocation.css';
 
-function CreateLocation({ handleProjectSave, index }) {
+function CreateLocation({ handleProjectSave, index, locationState }) {
   const [Answers, setAnswers] = useState({
     // location related
     name: "",
@@ -27,6 +27,15 @@ function CreateLocation({ handleProjectSave, index }) {
     // the library
     media_pages: []
   });
+
+
+  useEffect(() => {
+
+    if(locationState !== Answers) {
+        setAnswers(locationState)
+    }
+
+  },[locationState, Answers]);
 
   // if a value is changed it must:
   const handleChange = (objectName, value) => {

@@ -107,6 +107,7 @@ const CreateProject = ({ history }) => {
                                 <div key={index} >
                                     <CreateLocation
                                         handleProjectSave={answer => updateProject(index, answer)}
+                                        locationState={location}
                                         index={index}
                                     />
                                 </div>
