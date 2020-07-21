@@ -2,7 +2,23 @@ import React, { useState, useEffect} from 'react';
 import CreateLocation from "./../CreateLocation/CreateLocation";
 import "./CreateProject.scss"
 
-const CreateProject = () => {
+const CreateProject = ({ history }) => {
+
+    useEffect(() => {
+
+        const fileContent = history.location?.fileContents;
+        // configuration passed via upload
+        if(fileContent) {
+            const fileObject = JSON.parse(fileContent);
+            setAnswers(fileObject)
+            // improper way of doing it, but can't seem to set files attribute properly
+            document.querySelector("#intro-audio").files = createFileList(fileObject.intro_audio);
+            document.querySelector("#homepage-img").files = createFileList(fileObject.homepage_image);
+        }
+
+    },[history.location]);
+    
+
     const [Answers, setAnswers] = useState({
         project_name: "",
         intro_audio: "",
