@@ -1,40 +1,42 @@
 import React from 'react';
 import './updateold.css';
-export default class Updateold extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedFile: null
-          }
-      };
-onChangeHandler=event=>{
-    var file = event.target.files[0];
-    console.log(file);
-     this.setState({
-      selectedFile: file
-      });
-    };
-fileReaderHandler = () => {
-    var reader = new FileReader();
-    console.log(this.state.selectedFile);
-        var jsonData = reader.result;
-        console.log(jsonData);
-        const object1=JSON.parse(jsonData);
-        console.log(object1);
+class Updateold extends React.Component {
+    constructor(props) 
+    {
+        super (props);
+        this.state={
+            fileSelected: '',
+            jsonDataToPass: ''
         }
-render() {
+    }
+    handleChosenFile(e) 
+    {
+        let files=e.target.files;
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = (e)=>{
+            console.warn("json data",e.target.result);
+            var jsonData=reader.result;
+            console.log(jsonData);
+            const obj=JSON.stringify(jsonData);
+            console.log(obj);
+            const objJSON= JSON.parse(obj);
+            console.log(objJSON);
+            this.setState({jsonDataToPass: objJSON});
+            this.props.history.push({pathname : '/createnew', stateExisting: objJSON
+        })
+        }
+    }
+render() 
+{
     return (
-    <form action="">
-        <div>
-        <label>Upload Your File </label>
-              <div>
-                <input type="file" name="file" accept= '.json' onChange={this.onChangeHandler}/>
-              </div>
-              <div className="col-md-6 pull-right">
-              <button width="100%" type="button" onClick={this.fileReaderHandler}>Upload File</button>
-              </div>
+        <form>
+        <div >
+            <input type='file' id='file' className='input-file' 
+            accept='.json' onChange={(e)=> this.handleChosenFile(e)}/>
         </div>
-    </form>
-           );
-        }
-    };
+        </form>
+    )
+}
+}
+export default Updateold;

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import CreateLocation from "./../CreateLocation/CreateLocation";
 import "./CreateProject.scss"
 
 const CreateProject = () => {
-
     const [Answers, setAnswers] = useState({
         project_name: "",
         intro_audio: "",

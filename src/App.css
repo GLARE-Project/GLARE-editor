@@ -8,6 +8,9 @@ html {
   margin: 0;
 }
 
+#title {
+  color:  rgb(80, 159, 196);
+}
 .app {
   width: 960px;
   margin: 0 auto;
@@ -17,7 +20,7 @@ html {
 nav ul {
   list-style: none;
   display: flex;
-  background-color: black;
+  background-color: white;
   margin-bottom: 20px;
 }
 
@@ -26,7 +29,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: white;
+  color: rgb(80, 159, 196);
   text-decoration: none;
 }
 
