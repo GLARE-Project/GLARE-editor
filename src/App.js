@@ -8,12 +8,14 @@ function App() {
   return (
     <div className="app">
       <nav>
-        <h1>GLARE Configuration Editor</h1>
         <ul>
           <li><NavLink to='/'>Home</NavLink></li>
-          <li><NavLink to='/createnew'>Create New</NavLink></li>
-          <li><NavLink to='/updateold'>Update Existing</NavLink></li>
+          <li><NavLink to='/createnew'>New Project</NavLink></li>
+          <li><NavLink to='/updateold'>Edit Project</NavLink></li>
+          <li><NavLink to='/faq'>FAQ</NavLink></li>
         </ul>
+        <h1 id="title">GLARE</h1>
+        <h1>Configuration Editor</h1>
       </nav>
       <main>
         <Switch>
