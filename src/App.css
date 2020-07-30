@@ -87,20 +87,8 @@ footer p{
   line-height: 1;
 }
 
-h1 {
-  text-align: center !important;
-  font-size: 70px;
-  color: #91d3e1;
-  margin-bottom: 0px;
-}
-h2{
+h2, h3{
   color: #ffc400; 
-  text-align: center !important;
-  margin-bottom: 30px;
-}
-h3{
-  color: #ffc400; 
-  margin-bottom: 30px;
 }
 
 input[type="file"]{

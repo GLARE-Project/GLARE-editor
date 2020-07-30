@@ -1,10 +1,25 @@
 
 .homepage{
   display: flex;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  height: 100%;
 }
 
 .homepage img {
   width: 15em;
+}
+
+.side-text {
+  width: 20em;
+  margin: 0 2em;
+  text-align: left;
+}
+
+.side-text h1, .side-text h2{
+  margin: 0;
+}
+.side-text h1 {
+  font-size: 7em;
+  color: #91d3e1;
 }
