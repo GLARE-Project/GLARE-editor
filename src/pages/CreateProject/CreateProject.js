@@ -73,7 +73,8 @@ const CreateProject = ({ history }) => {
     return (
         <div className="CreateProject">
             <form className="pure-form pure-form-aligned">
-
+                <h1>New Project</h1>
+                <h2>Homepage Content</h2>
                 <div className="pure-control-group">
                     <label htmlFor="project-name">Project Name</label>
                     <input

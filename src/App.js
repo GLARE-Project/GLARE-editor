@@ -3,6 +3,7 @@ import './App.css';
 import Home from "./pages/home/Home";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import Updateold from "./pages/updateold/Updateold";
+import FAQ from "./pages/FAQ/FAQ.js";
 import { Switch, Route, NavLink } from 'react-router-dom';
 function App() {
   return (
@@ -14,17 +15,16 @@ function App() {
           <li><NavLink to='/updateold'>Edit Project</NavLink></li>
           <li><NavLink to='/faq'>FAQ</NavLink></li>
         </ul>
-        <h1 id="title">GLARE</h1>
-        <h1>Configuration Editor</h1>
       </nav>
       <main>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/createnew" component={CreateProject} />
           <Route exact path="/updateold" component={Updateold} />
+          <Route exact path="/faq" component={FAQ} />
         </Switch>
       </main>
-    </div>
+</div>
   )
 }
 export default App;

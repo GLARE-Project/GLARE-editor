@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import MapField from "./MapField";
 import LibraryField from "./LibraryField";
 
-
 import './CreateLocation.css';
 
 function CreateLocation({ handleProjectSave, index, locationState }) {

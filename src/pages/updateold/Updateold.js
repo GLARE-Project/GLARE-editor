@@ -21,6 +21,8 @@ class Updateold extends React.Component {
         return (
             <form>
                 <div >
+                    <h1>Project</h1>
+                    <h2>Configuration Editor</h2>
                     <input type='file' id='file' className='input-file'
                         accept='.json' onChange={(e) => this.handleChosenFile(e)} />
                 </div>

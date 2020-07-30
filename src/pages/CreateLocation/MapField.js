@@ -5,11 +5,11 @@ import "leaflet/dist/leaflet.css";
 const MapField = ({ handleLocation, currentLatitude, currentLongitude }) => {
 
   const mapRef = useRef(null);
-
+  
   const [position, setPosition] = useState([currentLatitude, currentLongitude]);
   const [zoom, setZoom] = useState(2);
 
-  const zoomLocation = useCallback((latlong) => {
+     const zoomLocation = useCallback((latlong) => {
     mapRef.current.leafletElement.flyTo(latlong, zoom, {animate: true});
   }, [zoom]);
 

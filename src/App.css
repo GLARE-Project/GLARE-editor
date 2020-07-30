@@ -1,46 +1,87 @@
-html {
-  box-sizing: border-box;
+html{
+  background-image: url("/images/Background2.jpg");
+  height: 100%;
+  width: 100%;
+  background-position: cover;
+  background-size: 100% 100%;
 }
 
 *, *::before, *::after {
-  box-sizing: inherit;
   padding: 0;
   margin: 0;
 }
 
-#title {
-  color:  rgb(80, 159, 196);
-}
 .app {
-  width: 960px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
+  width: 600px;
+  
 }
 
 nav ul {
   list-style: none;
   display: flex;
   background-color: white;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 70px;
 }
 
 nav ul li {
-  padding: 20px;
+  padding: 30px;
 }
 
 nav ul li a {
   color: rgb(80, 159, 196);
   text-decoration: none;
 }
+footer{
+  position: sticky;
+  margin: auto;
+}
 
-.current {
-  border-bottom: 4px solid white;
+footer ul {
+  list-style: none;
+  display: flex;
+  position: fixed;
+  text-align: center;
+  padding: 3px;
+}
+footer ul li{
+  padding: 10px;
+  margin: 0px;
 }
 
 h1 {
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: 70px;
+  color: rgb(80, 159, 196);
+  margin-bottom: 0px;
 }
+h2{
+  color: rgb(255, 196, 0); 
+  text-align: center;
+  margin-bottom: 30px;
+}
+h3{
+  color: rgb(255, 196, 0); 
+  margin-bottom: 30px;
+}
+h6{
+  color: black;
+  font-size: 10px;
+}
+hr{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color:  rgb(80, 159, 196);
+}
+
 
 p {
   margin-bottom: 15px;
+}
+
+
+input[type="file"]{
+  color: black;
 }

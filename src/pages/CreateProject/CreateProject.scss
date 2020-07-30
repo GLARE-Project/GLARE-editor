@@ -1,6 +1,13 @@
-
+$sub-heading-color: rgb(255, 196, 0);
+$heading-color:  rgb(80, 159, 196);
 .CreateProject {
-    background-image: url("/images/Background2.jpg");
+h1 {
+    font-size: 50px;
+    text-align: left;
+}
+h2{
+    text-align: left;
+}
     .locationCtn {
         display: flex;
         justify-content: center;
