@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import MapField from "./MapField";
 import LibraryField from "./LibraryField";
+import { Context } from "./../../App";
+import { useParams } from "react-router-dom";
 
 import './CreateLocation.css';
 
-function CreateLocation({ handleProjectSave, index, locationState }) {
-  const [Answers, setAnswers] = useState({
+function CreateLocation() {
+
+  const { Answers, changeAnswer } = useContext(Context);
+
+  const { id } = useParams();
+
+  const [currentID, setCurrentID] = useState(id);
+
+  const [hotspotData, setHotspotData] = useState({
     // location related
     name: "",
-    position: index + 1,
     latitude: 0,
     longitude: 0,
     // AR related
@@ -27,70 +35,68 @@ function CreateLocation({ handleProjectSave, index, locationState }) {
     media_pages: []
   });
 
-
-  useEffect(() => {
-
-    if(locationState !== Answers) {
-        setAnswers(locationState)
+  const handleProjectSave = updatedAnswer => {
+    // we add the new item to the array and set it to the current hotspot
+    if (currentID === "new") {
+      setCurrentID(Answers.hotspots.length);
+      changeAnswer("hotspots", [...Answers.hotspots, updatedAnswer]);
+    // we only need to update the existing data
+    } else {
+      let old = Answers.hotspots;
+      old[currentID] = updatedAnswer;
+      changeAnswer("hotspots", old)
     }
-
-  },[locationState, Answers]);
+  };
 
   // if a value is changed it must:
   const handleChange = (objectName, value) => {
     // set the new answer value
-    const newAnswer = { ...Answers, ...{ [objectName]: value } };
-    setAnswers(newAnswer);
-    handleProjectSave(newAnswer);
+    const newAnswer = { ...hotspotData, ...{ [objectName]: value } };
+    setHotspotData(newAnswer);
+    handleProjectSave(newAnswer)
   };
 
   const handleLocation = (lat, lng) => {
     const newAnswer = {
-      ...Answers,
-      ...{
-        latitude: lat,
-        longitude: lng
-      }
+      ...hotspotData,
+      latitude: lat,
+      longitude: lng
     };
-    setAnswers(newAnswer);
+    setHotspotData(newAnswer);
     handleProjectSave(newAnswer);
   }
 
   const handleLibrary = (data) => {
     const newAnswer = {
-      ...Answers,
-      ...{
-        media_pages: data
-      }
+      ...hotspotData,
+      media_pages: data
     };
-    setAnswers(newAnswer);
+    setHotspotData(newAnswer);
     handleProjectSave(newAnswer);
   };
 
   return (
     <div className="newConfigMain">
-      <legend>Position #{Answers.position} </legend>
-
       <div className="pure-control-group">
         <label htmlFor="hotspot-name">Hotspot name</label>
         <input
           type="text" id="hotspot-name" placeholder="enter name"
-          value={Answers.name}
+          value={hotspotData.name}
           onChange={e => handleChange("name", e.target.value)}
         />
       </div>
 
       <MapField
         handleLocation={handleLocation}
-        currentLatitude={Answers.latitude}
-        currentLongitude={Answers.longitude}
+        currentLatitude={hotspotData.latitude}
+        currentLongitude={hotspotData.longitude}
       />
 
       <div className="pure-control-group">
         <label htmlFor="latitude">Latitude</label>
         <input
           type="number" id="latitude" placeholder="enter latitude"
-          value={Answers.latitude != null ? Answers.latitude : ""}
+          value={hotspotData.latitude != null ? hotspotData.latitude : ""}
           onChange={e => handleChange("latitude", e.target.value)}
         />
       </div>
@@ -99,7 +105,7 @@ function CreateLocation({ handleProjectSave, index, locationState }) {
         <label htmlFor="longitude">Longitude</label>
         <input
           type="number" id="longitude" placeholder="enter longitude"
-          value={Answers.longitude != null ? Answers.longitude : ""}
+          value={hotspotData.longitude != null ? hotspotData.longitude : ""}
           onChange={e => handleChange("longitude", e.target.value)}
         />
       </div>

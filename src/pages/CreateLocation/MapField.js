@@ -42,6 +42,7 @@ const MapField = ({ handleLocation, currentLatitude, currentLongitude }) => {
         center={position} zoom={zoom}
         onClick={changeLocation}
         ref={mapRef}
+        minZoom={2}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
