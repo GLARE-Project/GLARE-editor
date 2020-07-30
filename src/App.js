@@ -65,18 +65,16 @@ function App() {
   return (
     <Provider>
       <div className="app">
-        <nav>
+        <nav className={"top-nav"}>
           <ul>
             <li><NavLink to='/'>Home</NavLink></li>
             <li><NavLink to='/project'>New Project</NavLink></li>
             <li><NavLink to='/updateold'>Edit Project</NavLink></li>
             <li><NavLink to='/faq'>FAQ</NavLink></li>
           </ul>
-          <h1 id="title">GLARE</h1>
-          <h1>Configuration Editor</h1>
         </nav>
-        <main>
-          <section>
+        <main className={"content-container"}>
+          <section className={"content-section"}>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/project" component={CreateProject} />
@@ -85,9 +83,9 @@ function App() {
               <Route exact path="/faq" component={FAQ} />
             </Switch>
           </section>
-          <aside>
+          <aside className={"project-side"}>
             <h2>New Project</h2>
-            <nav>
+            <nav className={"side-nav"}>
               <ul>
                 <li><NavLink to='/project'>Homepage Content</NavLink></li>
                 <li><NavLink to='/library/new'>Library Content</NavLink></li>
@@ -108,6 +106,9 @@ function App() {
               </Context.Consumer>
           </aside>
         </main>
+        <footer>
+            <h6>FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </h6>
+        </footer>
       </div>
     </Provider>
   )

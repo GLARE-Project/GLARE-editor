@@ -1,20 +1,10 @@
 
-.flexbox-container{
+.homepage{
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
   align-items: center;
+  flex-direction: column;
 }
-img{
-  align-content: flex-start;
-  width: 70%;
-}
-table{
-  text-align: justify;
-}
-footer {
-  text-align: center;
-  margin-top: 180px;
-  bottom: 0;
+
+.homepage img {
+  width: 15em;
 }

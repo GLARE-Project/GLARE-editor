@@ -1,42 +1,79 @@
 html{
-  background-image: url("/images/Background2.jpg");
   height: 100%;
   width: 100%;
-  background-position: cover;
-  background-size: 100% 100%;
 }
 
-*, *::before, *::after {
-  padding: 0;
-  margin: 0;
-}
-
-.app {
+.content-container {
+  width: 100%;
+  display: block;
   margin: 0 auto;
-  padding: 10px;
-  width: 600px;
-  
+  text-align: center;
 }
 
+.content-section, .top-nav ul {
+  width: calc(100% - 20em);
+}
+
+.content-section {
+  display: block;
+  min-height: calc(100vh - 12em);
+}
+
+.project-side {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 10em;
+  background-color: #0a4388;
+  text-align: center;
+  padding: 0 5em;
+  z-index: -1;
+}
+
+/* apply to all navigations */
 nav ul {
   list-style: none;
-  display: flex;
-  background-color: white;
-  margin-top: 0px;
-  margin-bottom: 70px;
-}
-
-nav ul li {
-  padding: 30px;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li a {
-  color: rgb(80, 159, 196);
   text-decoration: none;
 }
-footer{
-  position: sticky;
-  margin: auto;
+
+/* apply to top navigations */
+
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+}
+
+.top-nav ul li {
+  padding: 30px;
+}
+
+.top-nav ul li a {
+  color: #91d3e1;
+}
+
+/* apply to side navigations */
+.side-nav ul li {
+  display: flex;
+  flex-direction: column;
+}
+.side-nav ul li a {
+  color: white;
+}
+
+
+/* end navigations */
+
+footer {
+  text-align: center;
+  background-color: #91d3e1;
+  margin: 0;
+  padding: 1em 0;
 }
 
 footer ul {
@@ -52,35 +89,28 @@ footer ul li{
 }
 
 h1 {
-  text-align: center;
+  text-align: center !important;
   font-size: 70px;
-  color: rgb(80, 159, 196);
+  color: #91d3e1;
   margin-bottom: 0px;
 }
 h2{
-  color: rgb(255, 196, 0); 
-  text-align: center;
+  color: #ffc400; 
+  text-align: center !important;
   margin-bottom: 30px;
 }
 h3{
-  color: rgb(255, 196, 0); 
+  color: #ffc400; 
   margin-bottom: 30px;
 }
 h6{
   color: black;
   font-size: 10px;
 }
-hr{
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color:  rgb(80, 159, 196);
-}
-
 
 p {
   margin-bottom: 15px;
 }
-
 
 input[type="file"]{
   color: black;
