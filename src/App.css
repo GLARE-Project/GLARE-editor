@@ -13,9 +13,9 @@ html{
 }
 
 .content-section {
-  display: block;
+  display: flex;
+  justify-content: center;
   min-height: calc(100vh - (60px + 30px + 2em));
-  text-align: center;
 }
 
 .project-side {
@@ -85,6 +85,10 @@ footer p{
   color: black;
   font-size: 10px;
   line-height: 1;
+}
+
+h1 {
+  color: #91d3e1;
 }
 
 h2, h3{
