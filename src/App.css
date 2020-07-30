@@ -43,6 +43,19 @@ nav ul li a {
   text-decoration: none;
 }
 
+.project-side ul {
+  margin: 0;
+}
+
+.project-side ul li {
+  color: #ffc400;
+}
+
+.project-side ul li a {
+  color: white;
+  text-decoration: none;
+}
+
 /* apply to top navigations */
 
 .top-nav {
