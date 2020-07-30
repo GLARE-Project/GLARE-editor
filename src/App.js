@@ -107,7 +107,7 @@ function App() {
           </aside>
         </main>
         <footer>
-            <h6>FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </h6>
+            <p>FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </p>
         </footer>
       </div>
     </Provider>

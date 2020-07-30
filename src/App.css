@@ -4,31 +4,32 @@ html{
 }
 
 .content-container {
-  width: 100%;
-  display: block;
-  margin: 0 auto;
-  text-align: center;
+  position: relative;
+  display: flex;
 }
 
-.content-section, .top-nav ul {
+.content-section, .top-nav {
   width: calc(100% - 20em);
 }
 
 .content-section {
   display: block;
-  min-height: calc(100vh - 12em);
+  min-height: calc(100vh - (60px + 30px + 2em));
+  text-align: center;
 }
 
 .project-side {
   position: absolute;
-  top: 0;
+  top: -60px;
   right: 0;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   width: 10em;
+  height: calc(100% + 60px);
   background-color: #0a4388;
-  text-align: center;
-  padding: 0 5em;
-  z-index: -1;
+  padding: 0 5em;  
 }
 
 /* apply to all navigations */
@@ -43,6 +44,10 @@ nav ul li a {
 }
 
 /* apply to top navigations */
+
+.top-nav {
+  line-height: 0;
+}
 
 .top-nav ul {
   display: flex;
@@ -76,16 +81,10 @@ footer {
   padding: 1em 0;
 }
 
-footer ul {
-  list-style: none;
-  display: flex;
-  position: fixed;
-  text-align: center;
-  padding: 3px;
-}
-footer ul li{
-  padding: 10px;
-  margin: 0px;
+footer p{
+  color: black;
+  font-size: 10px;
+  line-height: 1;
 }
 
 h1 {
@@ -102,14 +101,6 @@ h2{
 h3{
   color: #ffc400; 
   margin-bottom: 30px;
-}
-h6{
-  color: black;
-  font-size: 10px;
-}
-
-p {
-  margin-bottom: 15px;
 }
 
 input[type="file"]{
