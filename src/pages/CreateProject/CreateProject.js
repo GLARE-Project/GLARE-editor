@@ -3,26 +3,27 @@ import "./CreateProject.scss"
 import { Context } from "./../../App"
 import createFileList from "./../../utils/utils";
 
-const CreateProject = ({ history }) => {
+const CreateProject = () => {
 
-    const { Answers, changeAnswer, setAnswers } = useContext(Context);
+    const { Answers, changeAnswer } = useContext(Context);
+    
+    const [localAnswers, setLocalAnswers] = useState({ project_name: ""});
 
     const [downloadURL, setURL] = useState(null);
 
-    useEffect(() => {
-
-        const fileContent = history.location?.fileContents;
-        // configuration passed via upload
-        if (fileContent) {
-          const fileObject = JSON.parse(fileContent);
-          setAnswers(fileObject)
+    const setFileVisual = (fileData) => {
           // improper way of doing it, but can't seem to set files attribute properly
-          document.querySelector("#intro-audio").files = createFileList(fileObject.intro_audio);
-          document.querySelector("#homepage-img").files = createFileList(fileObject.homepage_image);
-        }
-    
-      }, [history.location, setAnswers]);
+          document.querySelector("#intro-audio").files = createFileList(fileData.intro_audio);
+          document.querySelector("#homepage-img").files = createFileList(fileData.homepage_image);
+    }
 
+
+    // on load, if the id exists, load its data
+    useEffect(() => {
+        setFileVisual(Answers)
+        setLocalAnswers(Answers)
+    }, [Answers])
+    
     // generate the download URL
     const generateURL = () => {
         const jsonData = JSON.stringify(Answers);
@@ -33,9 +34,10 @@ const CreateProject = ({ history }) => {
     };
 
     // if a value is changed it must:
-    const handleChange = answerObj => {
+    const handleChange = (propertytName, value) => {
         // set the new answer value
-        changeAnswer(...answerObj);
+        changeAnswer(propertytName, value);
+        setLocalAnswers(Answers);
         // regenerate the URL
         setURL(generateURL());
     };
@@ -49,7 +51,7 @@ const CreateProject = ({ history }) => {
                     <label htmlFor="project-name">Project Name</label>
                     <input
                         type="text" id="project-name" placeholder="enter project name"
-                        value={Answers.project_name}
+                        value={localAnswers.project_name}
                         onChange={e => handleChange("project_name", e.target.value)}
                     />
                 </div>

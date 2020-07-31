@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Home from "./pages/home/Home";
 import CreateProject from "./pages/CreateProject/CreateProject";
-import Updateold from "./pages/updateold/Updateold";
+import UpdateProject from "./pages/UpdateProject/UpdateProject";
 import FAQ from "./pages/FAQ/FAQ.js";
 import CreateLocation from "./pages/CreateLocation/CreateLocation"
 import { Switch, Route, NavLink } from 'react-router-dom';
@@ -44,7 +44,7 @@ function App() {
           <ul>
             <li><NavLink to='/'>Home</NavLink></li>
             <li><NavLink to='/project'>New Project</NavLink></li>
-            <li><NavLink to='/updateold'>Edit Project</NavLink></li>
+            <li><NavLink to='/update'>Edit Project</NavLink></li>
             <li><NavLink to='/faq'>FAQ</NavLink></li>
           </ul>
         </nav>
@@ -54,7 +54,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/project" component={CreateProject} />
               <Route path="/library/:id" component={CreateLocation} />
-              <Route exact path="/updateold" component={Updateold} />
+              <Route exact path="/update" component={UpdateProject} />
               <Route exact path="/faq" component={FAQ} />
             </Switch>
           </section>
