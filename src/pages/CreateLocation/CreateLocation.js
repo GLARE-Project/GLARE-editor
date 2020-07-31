@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import MapField from "./MapField";
 import LibraryField from "./LibraryField";
 import { Context } from "./../../App";
-import { useParams } from "react-router-dom";
 import createFileList from "./../../utils/utils";
-
 import './CreateLocation.css';
+
 
 function CreateLocation() {
 
@@ -79,15 +79,6 @@ function CreateLocation() {
     handleProjectSave(newAnswer);
   }
 
-  const handleLibrary = (data) => {
-    const newAnswer = {
-      ...hotspotData,
-      media_pages: data
-    };
-    setHotspotData(newAnswer);
-    handleProjectSave(newAnswer);
-  };
-
   return (
     <div className="newConfigMain">
       <div className="pure-control-group">
@@ -158,7 +149,7 @@ function CreateLocation() {
         />
       </div>
 
-      <LibraryField handleLibrarySave={handleLibrary} />
+      <LibraryField hotspotID={currentID}/>
     </div>
   );
 }

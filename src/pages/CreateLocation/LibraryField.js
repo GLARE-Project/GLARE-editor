@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
+import { Context } from "./../../App";
+import createFileList from "./../../utils/utils";
 
-const LibraryField = ({ handleLibrarySave }) => {
+const LibraryField = ({ hotspotID }) => {
+
+    const { Answers, changeAnswer } = useContext(Context);
 
     const contentTypes = ["Pictures", "Audio", "Links"];
 
@@ -9,6 +13,20 @@ const LibraryField = ({ handleLibrarySave }) => {
     const [pictures, SetPictures] = useState([]);
     const [audio, SetAudio] = useState([]);
     const [links, SetLinks] = useState([]);
+
+    // TODO: figure out how to set these values...
+    // it gets complicated with setting the file list this way
+    useEffect(() => {
+        if (hotspotID !== "new" && Answers.hotspots.length > hotspotID) {
+          const hotspotData = Answers.hotspots[hotspotID];
+          const picturesMedia = hotspotData.media_pages.filter(media => media.title === "Pictures").pop();
+          SetPictures(destructorObject(picturesMedia));
+          const audioMedia = hotspotData.media_pages.filter(media => media.title === "Audio").pop();
+          SetAudio(destructorObject(audioMedia));
+          const linksMedia = hotspotData.media_pages.filter(media => media.title === "Links").pop();
+          SetLinks(destructorObject(linksMedia));
+        }
+    }, [Answers, hotspotID])
 
 
     const handleSelect = (e) => {
@@ -69,9 +87,25 @@ const LibraryField = ({ handleLibrarySave }) => {
         )
     });
 
+    const destructorObject = mediaObj => {
+        return mediaObj.content_items.map(media => {
+            return {
+                item: media.item,
+                item_description: media.item_description
+            }
+        })
+    };
+
+
     // save all the data as a predefined structure
     const handleSaveAll = () => {
-        handleLibrarySave(buildObject);
+        const hotspotData = Answers.hotspots[hotspotID];
+        const newAnswer = {
+            ...hotspotData,
+            media_pages: buildObject
+        };
+        // TODO: this causes a crash - but is needed to save
+        //changeAnswer("hotspots", newAnswer);
     };
 
     const createContent = () => {
