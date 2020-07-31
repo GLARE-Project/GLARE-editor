@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import MapField from "./MapField";
 import LibraryField from "./LibraryField";
 import { Context } from "./../../App";
@@ -11,7 +11,6 @@ function CreateLocation() {
   const { Answers, changeAnswer } = useContext(Context);
 
   const { id } = useParams();
-
   const [currentID, setCurrentID] = useState(id);
 
   const [hotspotData, setHotspotData] = useState({
@@ -34,6 +33,11 @@ function CreateLocation() {
     // the library
     media_pages: []
   });
+
+  // on load, if the id exists, load its data
+  useEffect(() => {
+    if (id !== "new" && Answers.hotspots.length > id) setHotspotData(Answers.hotspots[id]);
+  }, [Answers.hotspots, id])
 
   const handleProjectSave = updatedAnswer => {
     // we add the new item to the array and set it to the current hotspot

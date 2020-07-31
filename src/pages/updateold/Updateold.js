@@ -13,7 +13,7 @@ class Updateold extends React.Component {
         reader.readAsText(files[0]);
         reader.onload = (e) => {
             this.props.history.push({
-                pathname: '/createnew', fileContents: reader.result
+                pathname: '/project', fileContents: reader.result
             })
         }
     }

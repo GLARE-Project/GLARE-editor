@@ -1,12 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import "./CreateProject.scss"
 import { Context } from "./../../App"
+import createFileList from "./../../utils/utils";
 
-const CreateProject = () => {
+const CreateProject = ({ history }) => {
 
-    const { Answers, changeAnswer } = useContext(Context);
+    const { Answers, changeAnswer, setAnswers } = useContext(Context);
 
     const [downloadURL, setURL] = useState(null);
+
+    useEffect(() => {
+
+        const fileContent = history.location?.fileContents;
+        // configuration passed via upload
+        if (fileContent) {
+          const fileObject = JSON.parse(fileContent);
+          setAnswers(fileObject)
+          // improper way of doing it, but can't seem to set files attribute properly
+          document.querySelector("#intro-audio").files = createFileList(fileObject.intro_audio);
+          document.querySelector("#homepage-img").files = createFileList(fileObject.homepage_image);
+        }
+    
+      }, [history.location, setAnswers]);
 
     // generate the download URL
     const generateURL = () => {
