@@ -82,7 +82,11 @@ function App() {
           </aside>
         </main>
         <footer>
-            <p>FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </p>
+            <ul>
+              <li> FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </li>
+              <li><img  id="logo" src="/images/Kent State Logo.png"/></li>
+              <li><img  id="logo" src="/images/NEH_logo.png"/></li>
+            </ul>
         </footer>
       </div>
     </Provider>

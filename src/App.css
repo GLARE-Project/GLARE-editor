@@ -94,12 +94,19 @@ footer {
   padding: 1em 0;
 }
 
-footer p{
+footer ul li{
+  align-items: center;
+  display: inline-block;
+  list-style: none;
   color: black;
   font-size: 10px;
-  line-height: 1;
+  line-height: 0.5;
+  vertical-align: middle;
 }
 
+footer ul li img{
+ transform: scale(0.5);
+}
 h1 {
   color: #91d3e1;
 }
