@@ -11,17 +11,12 @@ const CreateProject = () => {
 
     const [downloadURL, setURL] = useState(null);
 
-    const setFileVisual = (fileData) => {
-          // improper way of doing it, but can't seem to set files attribute properly
-          document.querySelector("#intro-audio").files = createFileList(fileData.intro_audio);
-          document.querySelector("#homepage-img").files = createFileList(fileData.homepage_image);
-    }
-
-
     // on load, if the id exists, load its data
     useEffect(() => {
-        setFileVisual(Answers)
-        setLocalAnswers(Answers)
+        setLocalAnswers(Answers);
+        // improper way of doing it, but can't seem to set files attribute properly
+        document.querySelector("#intro-audio").files = createFileList(Answers.intro_audio);
+        document.querySelector("#homepage-img").files = createFileList(Answers.homepage_image);
     }, [Answers])
     
     // generate the download URL

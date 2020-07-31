@@ -3,6 +3,7 @@ import MapField from "./MapField";
 import LibraryField from "./LibraryField";
 import { Context } from "./../../App";
 import { useParams } from "react-router-dom";
+import createFileList from "./../../utils/utils";
 
 import './CreateLocation.css';
 
@@ -36,7 +37,15 @@ function CreateLocation() {
 
   // on load, if the id exists, load its data
   useEffect(() => {
-    if (id !== "new" && Answers.hotspots.length > id) setHotspotData(Answers.hotspots[id]);
+    if (id !== "new" && Answers.hotspots.length > id) {
+      const hotspotData = Answers.hotspots[id];
+      setHotspotData(hotspotData);
+      // improper way of doing it, but can't seem to set files attribute properly
+      document.querySelector("#ar-overlay").files = createFileList(hotspotData.AR_overlay);
+      document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
+      document.querySelector("#vr-overlay").files = createFileList(hotspotData.VR_overylay);
+      document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
+    }
   }, [Answers.hotspots, id])
 
   const handleProjectSave = updatedAnswer => {
