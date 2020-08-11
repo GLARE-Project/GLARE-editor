@@ -43,8 +43,21 @@ function App() {
         <nav className={"top-nav"}>
           <ul>
             <li><NavLink to='/'>Home</NavLink></li>
-            <li><NavLink to='/project'>New Project</NavLink></li>
-            <li><NavLink to='/update'>Edit Project</NavLink></li>
+
+            <li className="dropdown">
+              <NavLink className="dropbtn" to='/project'>New Project</NavLink>
+                <div className="dropdown-content"> 
+                   <NavLink to='/'>Configuration Editor</NavLink>
+                   <NavLink to='/'>Expert Configuration</NavLink>
+                </div>
+            </li>
+            <li className="dropdown">
+              <NavLink  className="dropbtn" to='/update'>Edit Project</NavLink>
+                <div className="dropdown-content"> 
+                  <NavLink to='/project'>Project Name</NavLink>
+                  <NavLink to='/'>Poems</NavLink>
+                </div>
+            </li>
             <li><NavLink to='/faq'>FAQ</NavLink></li>
           </ul>
         </nav>
@@ -68,7 +81,13 @@ function App() {
               </ul>
             </nav>
             <h3>Hotspots</h3>
-            
+            <nav className={"side-nav"}>
+              <ul>
+                <li className="list-addImage{">
+                  <NavLink to='/'>Add a Hotspot</NavLink>
+                </li>
+              </ul>
+            </nav>
             <Context.Consumer>
               {({ Answers }) => (
               <ul>{Answers.hotspots.map((location, index) => {
@@ -84,8 +103,8 @@ function App() {
         <footer>
             <ul>
               <li> FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </li>
-              <li><img  id="logo" src="/images/NEH_logo.png"/></li>
-              <li><img  id="logo" src="/images/Kent State Logo.png"/></li>
+              <li><img alt="NEH Logo" id="logo" src="/images/NEH_logo.png"/></li>
+              <li><img  alt="KSU Logo" id="logo" src="/images/Kent State Logo.png"/></li>
 
             </ul>
         </footer>

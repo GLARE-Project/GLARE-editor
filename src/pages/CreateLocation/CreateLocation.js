@@ -81,7 +81,8 @@ function CreateLocation() {
 
   return (
     <div className="newConfigMain">
-      <div className="pure-control-group">
+      <form className="pure-form-aligned">
+       <div className="pure-control-group">
         <label htmlFor="hotspot-name">Hotspot name</label>
         <input
           type="text" id="hotspot-name" placeholder="enter name"
@@ -121,6 +122,7 @@ function CreateLocation() {
           type="file" id="ar-overlay" placeholder="select image" accept="image/*"
           onChange={e => handleChange("AR_overlay", e.target.files[0]['name'])}
         />
+        
       </div>
 
 
@@ -130,6 +132,7 @@ function CreateLocation() {
           type="file" id="panorama-img" placeholder="select image" accept="image/*"
           onChange={e => handleChange("panorama_image", e.target.files[0]['name'])}
         />
+        
       </div>
 
 
@@ -139,6 +142,7 @@ function CreateLocation() {
           type="file" id="vr-overlay" placeholder="select image" accept="image/*"
           onChange={e => handleChange("VR_overylay", e.target.files[0]['name'])}
         />
+        
       </div>
 
       <div className="pure-control-group">
@@ -147,9 +151,11 @@ function CreateLocation() {
           type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
           onChange={e => handleChange("start_audio", e.target.files[0]['name'])}
         />
+        
       </div>
 
       <LibraryField hotspotID={currentID}/>
+      </form>
     </div>
   );
 }

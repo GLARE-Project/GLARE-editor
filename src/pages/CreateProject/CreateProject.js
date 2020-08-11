@@ -61,7 +61,7 @@ const CreateProject = () => {
 
                 <div className="pure-control-group">
                     <label htmlFor="homepage-img">Homepage Image</label>
-                    <input
+                    <input 
                         type="file" id="homepage-img" accept="image/*" name="file.jpg"
                         onChange={e => handleChange("homepage_image", e.target.files[0]['name'])}
                     />

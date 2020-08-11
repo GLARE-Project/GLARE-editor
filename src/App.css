@@ -20,14 +20,14 @@ html{
 
 .project-side {
   position: absolute;
-  top: -60px;
+  top: -80px;
   right: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   width: 10em;
-  height: calc(100% + 60px);
+  height: calc(100% + 80px);
   background-color: #0a4388;
   padding: 0 5em;  
 }
@@ -37,6 +37,7 @@ nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 nav ul li a {
@@ -78,7 +79,8 @@ nav ul li a {
 /* apply to side navigations */
 .side-nav ul li {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
+  padding-bottom: 8px;
 }
 .side-nav ul li a {
   color: white;
@@ -117,4 +119,43 @@ h2, h3{
 
 input[type="file"]{
   color: black;
+}
+li NavLink, .dropbtn {
+  display: block;
+  color: red;
+  padding-bottom: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+li NavLink:hover, .dropdown:hover .dropbtn {
+  background-color: white;
+}
+
+li.dropdown {
+  display: block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.dropdown-content NavLink {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+ul .list-addImage{
+list-style-image: url("/images/AddHotspot.jpg")
 }

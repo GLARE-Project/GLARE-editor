@@ -1,6 +1,11 @@
 $sub-heading-color: rgb(255, 196, 0);
 $heading-color:  rgb(80, 159, 196);
 .CreateProject {
+    input[type=text] {
+        border: none;
+        border-bottom: 4px solid $heading-color;  
+    }
+    
 h1 {
     font-size: 50px;
     text-align: left;
