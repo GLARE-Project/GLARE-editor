@@ -88,12 +88,14 @@ const LibraryField = ({ hotspotID }) => {
     });
 
     const destructorObject = mediaObj => {
-        return mediaObj.content_items.map(media => {
-            return {
-                item: media.item,
-                item_description: media.item_description
-            }
-        })
+        if (mediaObj && mediaObj.hasOwnProperty("content_items"))
+            return mediaObj.content_items.map(media => {
+                return {
+                    item: media.item,
+                    item_description: media.item_description
+                }
+            })
+        else return []
     };
 
 

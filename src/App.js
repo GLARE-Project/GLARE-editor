@@ -46,17 +46,17 @@ function App() {
 
             <li className="dropdown">
               <NavLink className="dropbtn" to='/project'>New Project</NavLink>
-                <div className="dropdown-content"> 
-                   <NavLink to='/'>Configuration Editor</NavLink>
-                   <NavLink to='/'>Expert Configuration</NavLink>
-                </div>
+              <div className="dropdown-content">
+                <NavLink to='/'>Configuration Editor</NavLink>
+                <NavLink to='/'>Expert Configuration</NavLink>
+              </div>
             </li>
             <li className="dropdown">
-              <NavLink  className="dropbtn" to='/update'>Edit Project</NavLink>
-                <div className="dropdown-content"> 
-                  <NavLink to='/project'>Project Name</NavLink>
-                  <NavLink to='/'>Poems</NavLink>
-                </div>
+              <NavLink className="dropbtn" to='/update'>Edit Project</NavLink>
+              <div className="dropdown-content">
+                <NavLink to='/project'>Project Name</NavLink>
+                <NavLink to='/'>Poems</NavLink>
+              </div>
             </li>
             <li><NavLink to='/faq'>FAQ</NavLink></li>
           </ul>
@@ -80,32 +80,32 @@ function App() {
               </ul>
             </nav>
             <h3>Hotspots</h3>
-            <nav className={"side-nav"}>
+            <nav className={"hotspot-nav"}>
+              <Context.Consumer>
+                {({ Answers }) => (
+                  <ul className="hotspot-items">{Answers.hotspots.map((location, index) => {
+                    return (
+                      <li key={index}><NavLink to={`/hotspot/${index}`}>{location.name}</NavLink></li>
+                    )
+
+                  })}</ul>
+                )}
+              </Context.Consumer>
               <ul>
                 <li className="add-hotspot">
                   <NavLink to='/hotspot/new'>Add a Hotspot</NavLink>
                 </li>
               </ul>
             </nav>
-            <Context.Consumer>
-              {({ Answers }) => (
-              <ul>{Answers.hotspots.map((location, index) => {
-                return (
-                  <li key={index}><NavLink to={`/library/${index}`}>{location.name}</NavLink></li>
-                )
-
-              })}</ul>
-              )}
-              </Context.Consumer>
           </aside>
         </main>
         <footer>
-            <ul>
-              <li> FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </li>
-              <li><img alt="NEH Logo" id="logo" src="/images/NEH_logo.png"/></li>
-              <li><img  alt="KSU Logo" id="logo" src="/images/Kent State Logo.png"/></li>
+          <ul>
+            <li> FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </li>
+            <li><img alt="NEH Logo" id="logo" src="/images/NEH_logo.png" /></li>
+            <li><img alt="KSU Logo" id="logo" src="/images/Kent State Logo.png" /></li>
 
-            </ul>
+          </ul>
         </footer>
       </div>
     </Provider>
