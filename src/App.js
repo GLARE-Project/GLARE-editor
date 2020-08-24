@@ -49,7 +49,7 @@ function App() {
               </li>
 
               <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <a className="dropbtn" href="#">New Project</a>
+                <NavLink class="pure-menu-link" to='/project'>New Project</NavLink>
                 <ul class="pure-menu-children">
                   <li class="pure-menu-item">
                     <NavLink class="pure-menu-link" to='/project'>Configuration Editor</NavLink>
@@ -61,7 +61,7 @@ function App() {
               </li>
 
               <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <a className="dropbtn" href="#">Edit Project</a>
+                <NavLink class="pure-menu-link" to='/update'>Edit Project</NavLink>
                 <ul class="pure-menu-children">
                   <li class="pure-menu-item">
                     <NavLink class="pure-menu-link" to='/update'>Project Name</NavLink>
