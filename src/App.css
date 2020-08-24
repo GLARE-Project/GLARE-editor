@@ -169,6 +169,19 @@ li.dropdown {
   display: block;
 }
 
-ul .list-addImage{
-list-style-image: url("/images/AddHotspot.jpg")
+ul .add-hotspot {
+  display: block !important;
+}
+
+ul .add-hotspot a:before {
+  display: inline-block;
+  content: "+";
+  text-align: center;
+  height: 1em;
+  width: 1em;
+  border-radius: .75em;
+  padding: .25em;
+  margin-right: .5em;
+  color: white;
+  background-color: #ffc400;
 }

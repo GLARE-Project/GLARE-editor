@@ -66,7 +66,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/project" component={CreateProject} />
-              <Route path="/library/:id" component={CreateLocation} />
+              <Route path="/hotspot/:id" component={CreateLocation} />
               <Route exact path="/update" component={UpdateProject} />
               <Route exact path="/faq" component={FAQ} />
             </Switch>
@@ -76,15 +76,14 @@ function App() {
             <nav className={"side-nav"}>
               <ul>
                 <li><NavLink to='/project'>Homepage Content</NavLink></li>
-                <li><NavLink to='/library/new'>Library Content</NavLink></li>
                 <li><NavLink to='/menu'>Menu Content</NavLink></li>
               </ul>
             </nav>
             <h3>Hotspots</h3>
             <nav className={"side-nav"}>
               <ul>
-                <li className="list-addImage{">
-                  <NavLink to='/'>Add a Hotspot</NavLink>
+                <li className="add-hotspot">
+                  <NavLink to='/hotspot/new'>Add a Hotspot</NavLink>
                 </li>
               </ul>
             </nav>
