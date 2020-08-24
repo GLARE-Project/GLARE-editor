@@ -1,5 +1,5 @@
 :root {
-  --header-size: 80px;
+  --header-size: 66px;
   --footer-txt-size: 10px;
   --footer-size: calc( 5 * var(--footer-txt-size) );
 }
@@ -7,6 +7,8 @@
 html{
   height: 100%;
   width: 100%;
+  background-color: #072e62;
+  color: white;
 }
 
 .content-container {
@@ -43,7 +45,6 @@ nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 nav ul li a {
@@ -68,17 +69,24 @@ nav ul li a {
 
 /* apply to top navigations */
 
-.top-nav {
-  line-height: 0;
-}
-
-.top-nav ul {
+.top-nav .pure-menu-list {
   display: flex;
-  justify-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
-.top-nav ul li {
-  padding: 30px;
+.top-nav ul li.pure-menu-item {
+  margin: 1em;
+  text-align: center;
+}
+
+.top-nav .pure-menu-link:hover, .top-nav .pure-menu-item:hover > a { 
+  background-color: transparent;
+  color: #ffc400;
+}
+
+.top-nav .pure-menu-allow-hover:hover > .pure-menu-children {
+  background-color: #0a4388;
 }
 
 .top-nav ul li a {
@@ -134,42 +142,7 @@ h2, h3{
 }
 
 input[type="file"]{
-  color: black;
-}
-li NavLink, .dropbtn {
-  display: block;
-  color: red;
-  padding-bottom: 20px;
-  text-align: center;
-  text-decoration: none;
-}
-
-li NavLink:hover, .dropdown:hover .dropbtn {
-  background-color: white;
-}
-
-li.dropdown {
-  display: block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 2;
-}
-
-.dropdown-content NavLink {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+  color: white;
 }
 
 ul .add-hotspot {

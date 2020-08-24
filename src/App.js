@@ -41,25 +41,43 @@ function App() {
     <Provider>
       <div className="app">
         <nav className={"top-nav"}>
-          <ul>
-            <li><NavLink to='/'>Home</NavLink></li>
+          
+          <div class="pure-menu pure-menu-horizontal">
+            <ul class="pure-menu-list">
+              <li class="pure-menu-item">
+                <NavLink class="pure-menu-link" to='/'>Home</NavLink>
+              </li>
 
-            <li className="dropdown">
-              <NavLink className="dropbtn" to='/project'>New Project</NavLink>
-              <div className="dropdown-content">
-                <NavLink to='/'>Configuration Editor</NavLink>
-                <NavLink to='/'>Expert Configuration</NavLink>
-              </div>
-            </li>
-            <li className="dropdown">
-              <NavLink className="dropbtn" to='/update'>Edit Project</NavLink>
-              <div className="dropdown-content">
-                <NavLink to='/project'>Project Name</NavLink>
-                <NavLink to='/'>Poems</NavLink>
-              </div>
-            </li>
-            <li><NavLink to='/faq'>FAQ</NavLink></li>
-          </ul>
+              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <a className="dropbtn" href="#">New Project</a>
+                <ul class="pure-menu-children">
+                  <li class="pure-menu-item">
+                    <NavLink class="pure-menu-link" to='/project'>Configuration Editor</NavLink>
+                  </li>
+                  <li class="pure-menu-item">
+                    <NavLink class="pure-menu-link" to='/'>Expert Configuration</NavLink>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <a className="dropbtn" href="#">Edit Project</a>
+                <ul class="pure-menu-children">
+                  <li class="pure-menu-item">
+                    <NavLink class="pure-menu-link" to='/update'>Project Name</NavLink>
+                  </li>
+                  <li class="pure-menu-item">
+                    <NavLink class="pure-menu-link" to='/'>Poems</NavLink>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="pure-menu-item">
+                <NavLink class="pure-menu-link" to='/faq'>FAQ</NavLink>
+              </li>
+            </ul>
+          </div>
+
         </nav>
         <main className={"content-container"}>
           <section className={"content-section"}>
