@@ -89,6 +89,9 @@ nav ul li a {
 .top-nav .pure-menu-allow-hover:hover > .pure-menu-children {
   background-color: #0a4388;
 }
+.top-nav .pure-menu-allow-hover:hover > .pure-menu-children a {
+  color: white;
+}
 
 .top-nav ul li a {
   color: #91d3e1;

@@ -42,38 +42,38 @@ function App() {
       <div className="app">
         <nav className={"top-nav"}>
           
-          <div class="pure-menu pure-menu-horizontal">
-            <ul class="pure-menu-list">
-              <li class="pure-menu-item">
-                <NavLink class="pure-menu-link" to='/'>Home</NavLink>
+          <div className="pure-menu pure-menu-horizontal">
+            <ul className="pure-menu-list">
+              <li className="pure-menu-item">
+                <NavLink className="pure-menu-link" to='/'>Home</NavLink>
               </li>
 
-              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <NavLink class="pure-menu-link" to='/project'>New Project</NavLink>
-                <ul class="pure-menu-children">
-                  <li class="pure-menu-item">
-                    <NavLink class="pure-menu-link" to='/project'>Configuration Editor</NavLink>
+              <li className="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <NavLink className="pure-menu-link" to='/project'>New Project</NavLink>
+                <ul className="pure-menu-children">
+                  <li className="pure-menu-item">
+                    <NavLink className="pure-menu-link" to='/project'>Configuration Editor</NavLink>
                   </li>
-                  <li class="pure-menu-item">
-                    <NavLink class="pure-menu-link" to='/'>Expert Configuration</NavLink>
+                  <li className="pure-menu-item">
+                    <NavLink className="pure-menu-link" to='/'>Expert Configuration</NavLink>
                   </li>
                 </ul>
               </li>
 
-              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <NavLink class="pure-menu-link" to='/update'>Edit Project</NavLink>
-                <ul class="pure-menu-children">
-                  <li class="pure-menu-item">
-                    <NavLink class="pure-menu-link" to='/update'>Project Name</NavLink>
+              <li className="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <NavLink className="pure-menu-link" to='/update'>Edit Project</NavLink>
+                <ul className="pure-menu-children">
+                  <li className="pure-menu-item">
+                    <NavLink className="pure-menu-link" to='/update'>Project Name</NavLink>
                   </li>
-                  <li class="pure-menu-item">
-                    <NavLink class="pure-menu-link" to='/'>Poems</NavLink>
+                  <li className="pure-menu-item">
+                    <NavLink className="pure-menu-link" to='/'>Poems</NavLink>
                   </li>
                 </ul>
               </li>
 
-              <li class="pure-menu-item">
-                <NavLink class="pure-menu-link" to='/faq'>FAQ</NavLink>
+              <li className="pure-menu-item">
+                <NavLink className="pure-menu-link" to='/faq'>FAQ</NavLink>
               </li>
             </ul>
           </div>
