@@ -81,7 +81,7 @@ function CreateLocation() {
 
   return (
     <div className="newConfigMain">
-      <form className="pure-form-aligned">
+      <form className="pure-form pure-form-aligned">
        <div className="pure-control-group">
         <label htmlFor="hotspot-name">Hotspot name</label>
         <input

@@ -26,6 +26,12 @@ html{
   min-height: calc(100vh - (var(--header-size) + var(--footer-size) + 2em));
 }
 
+.content-section > * {
+  display: flex;
+  justify-content: center;
+  width: 75%;
+}
+
 .project-side {
   position: absolute;
   top: calc(-1 * var(--header-size) );
@@ -88,6 +94,7 @@ nav ul li a {
 
 .top-nav .pure-menu-allow-hover:hover > .pure-menu-children {
   background-color: #0a4388;
+  z-index: 401;
 }
 .top-nav .pure-menu-allow-hover:hover > .pure-menu-children a {
   color: white;
@@ -143,6 +150,13 @@ h1 {
 
 h2, h3{
   color: #ffc400; 
+}
+
+
+
+input[type="text"], input[type="number"] {
+  border: none;
+  border-bottom: 4px solid #91d3e1 !important;  
 }
 
 input[type="file"]{

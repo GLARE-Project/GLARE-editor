@@ -1,4 +1,11 @@
-h1{
-    text-align: left;
-    font-size: 50px;
+.FAQ-ctn {
+    
+    flex-direction: column;
+    align-self: flex-start;
+
+    h1{
+        text-align: left;
+        font-size: 50px;
+    }
 }
+

@@ -3,7 +3,7 @@ import './FAQ.scss';
 function FAQ() {
 
 return (
-            <div className="container">
+            <div className="FAQ-ctn">
                     <h1><b>FAQ</b></h1>
                     <h3>Subject 1</h3>
                     <div>
