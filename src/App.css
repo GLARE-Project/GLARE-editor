@@ -80,7 +80,8 @@ nav ul li a {
   text-align: center;
 }
 
-.top-nav .pure-menu-link:hover, .top-nav .pure-menu-item:hover > a { 
+.top-nav .pure-menu-link:hover, .top-nav .pure-menu-item:hover > a, 
+.top-nav .pure-menu-active > .pure-menu-link, .top-nav .pure-menu-link:focus { 
   background-color: transparent;
   color: #ffc400;
 }
