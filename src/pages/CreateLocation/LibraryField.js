@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { Context } from "./../../App";
 import createFileList from "./../../utils/utils";
 
@@ -14,19 +14,46 @@ const LibraryField = ({ hotspotID }) => {
     const [audio, SetAudio] = useState([]);
     const [links, SetLinks] = useState([]);
 
-    // TODO: figure out how to set these values...
-    // it gets complicated with setting the file list this way
+    // it gets complicated with setting the file list this way, rewrite due
+    const handleFileUpdates = useCallback(() => {
+
+        pictures.map((pictureObj, index) => {
+            document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
+            document.querySelector(`#picture-descript-${index}`).value = pictureObj.item_description;
+            return null;
+        });
+
+        audio.map((audioObj, index) => {
+            document.querySelector(`#content-audio-${index}`).files = createFileList(audioObj.item);
+            document.querySelector(`#audio-descript-${index}`).value = audioObj.item_description;
+            return null;
+        });
+
+        links.map((linkObj, index) => {
+            document.querySelector(`#content-link-${index}`).value = linkObj.item;
+            document.querySelector(`#link-descript-${index}`).value = linkObj.item_description;
+            return null;
+        });
+
+    }, [pictures, audio, links]);
+
+
     useEffect(() => {
         if (hotspotID !== "new" && Answers.hotspots.length > hotspotID) {
-          const hotspotData = Answers.hotspots[hotspotID];
-          const picturesMedia = hotspotData.media_pages.filter(media => media.title === "Pictures").pop();
-          SetPictures(destructorObject(picturesMedia));
-          const audioMedia = hotspotData.media_pages.filter(media => media.title === "Audio").pop();
-          SetAudio(destructorObject(audioMedia));
-          const linksMedia = hotspotData.media_pages.filter(media => media.title === "Links").pop();
-          SetLinks(destructorObject(linksMedia));
+            const hotspotData = Answers.hotspots[hotspotID];
+
+            const picturesMedia = destructorObject(hotspotData.media_pages.filter(media => media.title === "Pictures").pop());
+            SetPictures(picturesMedia);
+
+            const audioMedia = destructorObject(hotspotData.media_pages.filter(media => media.title === "Audio").pop());
+            SetAudio(audioMedia);
+
+            const linksMedia = destructorObject(hotspotData.media_pages.filter(media => media.title === "Links").pop());
+            SetLinks(linksMedia);
+
+            handleFileUpdates();
         }
-    }, [Answers, hotspotID])
+    }, [Answers, hotspotID, handleFileUpdates])
 
 
     const handleSelect = (e) => {
@@ -153,17 +180,17 @@ const LibraryField = ({ hotspotID }) => {
                     <React.Fragment key={index}>
 
                         <div className="pure-control-group">
-                            <label htmlFor="content-image">Content Image</label>
+                            <label htmlFor={`content-image-${index}`}>Content Image</label>
                             <input
-                                type="file" id="content-image" placeholder="select image" accept="image/*"
+                                type="file" id={`content-image-${index}`} placeholder="select image" accept="image/*"
                                 onChange={e => handlePicture(index, "image", e)}
                             />
                         </div>
 
                         <div className="pure-control-group">
-                            <label htmlFor="content-descript">Content Description</label>
+                            <label htmlFor={`picture-descript-${index}`}>Content Description</label>
                             <input
-                                type="text" id="picture-descript" placeholder="enter description"
+                                type="text" id={`picture-descript-${index}`} placeholder="enter description"
                                 onChange={e => handlePicture(index, "description", e)}
                             />
 
@@ -178,17 +205,17 @@ const LibraryField = ({ hotspotID }) => {
                     <React.Fragment key={index}>
 
                         <div className="pure-control-group">
-                            <label htmlFor="content-audio">Content Audio</label>
+                            <label htmlFor={`content-audio-${index}`}>Content Audio</label>
                             <input
-                                type="file" id="content-audio" placeholder="select image" accept="audio/*"
+                                type="file" id={`content-audio-${index}`} placeholder="select image" accept="audio/*"
                                 onChange={e => handleAudio(index, "audio", e)}
                             />
                         </div>
 
                         <div className="pure-control-group">
-                            <label htmlFor="audio-descript">Content Description</label>
+                            <label htmlFor={`audio-descript-${index}`}>Content Description</label>
                             <input
-                                type="text" id="audio-descript" placeholder="enter description"
+                                type="text" id={`audio-descript-${index}`} placeholder="enter description"
                                 onChange={e => handleAudio(index, "description", e)}
                             />
                         </div>
@@ -203,18 +230,18 @@ const LibraryField = ({ hotspotID }) => {
                     <React.Fragment key={index}>
 
                         <div className="pure-control-group">
-                            <label htmlFor="content-link">Content Link</label>
+                            <label htmlFor={`content-link-${index}`}>Content Link</label>
                             <input
-                                type="text" id="content-link" placeholder="enter link"
+                                type="text" id={`content-link-${index}`} placeholder="enter link"
                                 onChange={e => handleLink(index, "link", e)}
                             />
                         </div>
 
 
                         <div className="pure-control-group">
-                            <label htmlFor="link-descript">Content Description</label>
+                            <label htmlFor={`link-descript-${index}`}>Content Description</label>
                             <input
-                                type="text" id="link-descript" placeholder="enter description"
+                                type="text" id={`link-descript-${index}`} placeholder="enter description"
                                 onChange={e => handleLink(index, "description", e)}
                             />
                         </div>
