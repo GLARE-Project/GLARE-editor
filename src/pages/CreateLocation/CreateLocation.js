@@ -100,7 +100,7 @@ function CreateLocation() {
       <div className="pure-control-group">
         <label htmlFor="latitude">Latitude</label>
         <input
-          type="number" id="latitude" placeholder="enter latitude"
+          type="number" id="latitude" placeholder="enter latitude" min={-90} max={90}
           value={hotspotData.latitude != null ? hotspotData.latitude : ""}
           onChange={e => handleChange("latitude", e.target.value)}
         />
@@ -109,7 +109,7 @@ function CreateLocation() {
       <div className="pure-control-group">
         <label htmlFor="longitude">Longitude</label>
         <input
-          type="number" id="longitude" placeholder="enter longitude"
+          type="number" id="longitude" placeholder="enter longitude" min={-180} max={80}
           value={hotspotData.longitude != null ? hotspotData.longitude : ""}
           onChange={e => handleChange("longitude", e.target.value)}
         />
