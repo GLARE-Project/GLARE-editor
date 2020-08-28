@@ -154,7 +154,10 @@ function CreateLocation() {
         
       </div>
 
-      <LibraryField hotspotID={currentID}/>
+      <LibraryField 
+        handleLibrary={data => handleChange("media_pages", data)}
+        libraryPages={hotspotData.media_pages}
+      />
       </form>
     </div>
   );

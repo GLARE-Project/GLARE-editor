@@ -1,10 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Context } from "./../../App";
+import React, { useState, useEffect } from 'react';
 import createFileList from "./../../utils/utils";
 
-const LibraryField = ({ hotspotID }) => {
-
-    const { Answers, changeAnswer } = useContext(Context);
+const LibraryField = ({ handleLibrary, libraryPages }) => {
 
     const contentTypes = ["Pictures", "Audio", "Links"];
 
@@ -16,27 +13,21 @@ const LibraryField = ({ hotspotID }) => {
 
 
     useEffect(() => {
-        if (hotspotID !== "new" && Answers.hotspots.length > hotspotID) {
-            const { media_pages } = Answers.hotspots[hotspotID];
+        const picturesMedia = destructorObject(libraryPages.filter(media => media.title === "Pictures").pop());
+        SetPictures(picturesMedia);
+        // set the files to be displayed for images
+        picturesMedia.forEach((pictureObj, index) => {
+            document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
+        });
+        
 
-            const picturesMedia = destructorObject(media_pages.filter(media => media.title === "Pictures").pop());
-            // JSON.stringify() is used to compare two array - lightweight "hack"
-            if (JSON.stringify(pictures) !== JSON.stringify(picturesMedia)) {
-                SetPictures(picturesMedia);
-                // set the files to be displayed for images
-                pictures.forEach((pictureObj, index) => {
-                    document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
-                });
-            }
+        const audioMedia = destructorObject(libraryPages.filter(media => media.title === "Audio").pop());
+        SetAudio(audioMedia);
 
-            const audioMedia = destructorObject(media_pages.filter(media => media.title === "Audio").pop());
-            if (JSON.stringify(audio) !== JSON.stringify(audioMedia)) SetAudio(audioMedia);
+        const linksMedia = destructorObject(libraryPages.filter(media => media.title === "Links").pop());
+        SetLinks(linksMedia);
 
-            const linksMedia = destructorObject(media_pages.filter(media => media.title === "Links").pop());
-            if (JSON.stringify(links) !== JSON.stringify(linksMedia)) SetLinks(linksMedia);
-
-        }
-    }, [Answers, hotspotID, pictures, audio, links]);
+    }, [libraryPages]);
 
 
     const handleSelect = (e) => {
@@ -61,7 +52,7 @@ const LibraryField = ({ hotspotID }) => {
         let old = audio;
 
         if (type === "audio") {
-            old[index].item = e.target.files[0]['name'];
+            old[index].item = e.target.value;
         } else {
             old[index].item_description = e.target.value;
         }
@@ -111,13 +102,7 @@ const LibraryField = ({ hotspotID }) => {
 
     // save all the data as a predefined structure
     const handleSaveAll = () => {
-        const hotspotData = Answers.hotspots[hotspotID];
-        const newAnswer = {
-            ...hotspotData,
-            media_pages: buildObject
-        };
-        // TODO: this causes a crash - but is needed to save
-        //changeAnswer("hotspots", newAnswer);
+        handleLibrary(buildObject);
     };
 
     const createContent = () => {
