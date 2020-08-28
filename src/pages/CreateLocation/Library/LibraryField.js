@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import createFileList from "./../../utils/utils";
+import createFileList from "../../../utils/utils";
 
+// TODO: clean up saving system
+// remove any place where we SetPictures due to dependency exhaust - but it's ugly
 const LibraryField = ({ handleLibrary, libraryPages }) => {
 
     const contentTypes = ["Pictures", "Audio", "Links"];
@@ -14,12 +16,12 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
 
     useEffect(() => {
         const picturesMedia = destructorObject(libraryPages.filter(media => media.title === "Pictures").pop());
-        SetPictures(picturesMedia);
-        // set the files to be displayed for images
-        picturesMedia.forEach((pictureObj, index) => {
-            document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
-        });
-        
+        // cheap way of checking if two arrays are different - to prevent dependency exhaust
+        if (JSON.stringify(pictures) === JSON.stringify(picturesMedia))
+            pictures.forEach((pictureObj, index) => {
+                document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
+            });
+        else SetPictures(picturesMedia)
 
         const audioMedia = destructorObject(libraryPages.filter(media => media.title === "Audio").pop());
         SetAudio(audioMedia);
@@ -27,7 +29,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
         const linksMedia = destructorObject(libraryPages.filter(media => media.title === "Links").pop());
         SetLinks(linksMedia);
 
-    }, [libraryPages]);
+    }, [libraryPages, pictures]); // picture isn't added to dependency since adding a new item will result cause a reload
 
 
     const handleSelect = (e) => {
@@ -43,9 +45,19 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
             old[index].item_description = e.target.value;
         }
 
-        SetPictures(old);
+        // building using the new data
+        const customBuildObj = contentTypes.map((contentName, index) => {
+            const items = index === 1 ? audio : (index === 2 ? links : old);
+            return (
+                {
+                    "title": contentName,
+                    "content_type": index,
+                    "content_items": items
+                }
+            )
+        });
 
-        handleSaveAll();
+        handleLibrary(customBuildObj);
     };
 
     const handleAudio = (index, type, e) => {
@@ -112,19 +124,21 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
             "item_description": ""
         };
 
-        switch (parseInt(selectedContent)) {
-            default:
-                SetPictures([...pictures, content]);
-                break;
+        const customBuildObj = contentTypes.map((contentName, index) => {
+            let items = index === 1 ? audio : (index === 2 ? links : pictures);
+            // we add the new object to the selected item
+            if (parseInt(selectedContent) === index) items = [...items, content]
+            return (
+                {
+                    "title": contentName,
+                    "content_type": index,
+                    "content_items": items
+                }
+            )
+        });
 
-            case 1:
-                SetAudio([...audio, content]);
-                break;
+        handleLibrary(customBuildObj);
 
-            case 2:
-                SetLinks([...links, content]);
-                break;
-        }
     };
 
     return (

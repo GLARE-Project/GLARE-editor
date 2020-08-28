@@ -16,7 +16,6 @@ const Provider = ({ children }) => {
     intro_audio: "",
     homepage_image: "",
     hotspots: [],
-    links: []
   });
 
   const changeAnswer = (propertytName, value) => {

@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import MapField from "./MapField";
-import LibraryField from "./LibraryField";
+import MapField from "./Map/MapField";
+import LibraryField from "./Library/LibraryField";
+import MenuField from "./Menu/MenuField";
 import { Context } from "./../../App";
 import createFileList from "./../../utils/utils";
 import './CreateLocation.css';
@@ -158,6 +159,12 @@ function CreateLocation() {
         handleLibrary={data => handleChange("media_pages", data)}
         libraryPages={hotspotData.media_pages}
       />
+
+      <MenuField 
+        handleMenu={data => handleChange("main_pages", data)}
+        menuItems={hotspotData.main_pages}
+      />
+
       </form>
     </div>
   );
