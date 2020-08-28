@@ -119,8 +119,8 @@ function App() {
         <footer>
           <ul>
             <li> FAQ | 2017 &copy; Kent State University | Privacy & Terms of Use </li>
-            <li><img alt="NEH Logo" id="logo" src="/images/NEH_logo.png" /></li>
-            <li><img alt="KSU Logo" id="logo" src="/images/Kent State Logo.png" /></li>
+            <li><img alt="NEH Logo" id="logo" src={`${process.env.PUBLIC_URL}/images/NEH_logo.png`} /></li>
+            <li><img alt="KSU Logo" id="logo" src={`${process.env.PUBLIC_URL}/images/Kent State Logo.png`} /></li>
 
           </ul>
         </footer>

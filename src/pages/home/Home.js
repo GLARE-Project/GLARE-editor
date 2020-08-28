@@ -4,7 +4,7 @@ function Home() {
 
     return (
         <div className="homepage">
-            <img src={"/images/ConfigPhone.png"} alt="logo" />
+            <img src={`${process.env.PUBLIC_URL}/images/ConfigPhone.png`} alt="logo" />
             <div className={"side-text"}>
                 <h1>GLARE</h1>
                 <h2>Configuration Editor</h2>
