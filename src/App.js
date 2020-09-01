@@ -6,10 +6,52 @@ import UpdateProject from "./pages/UpdateProject/UpdateProject";
 import FAQ from "./pages/FAQ/FAQ.js";
 import CreateLocation from "./pages/CreateLocation/CreateLocation"
 import { Switch, Route, NavLink } from 'react-router-dom';
+import { string, object, number, array, mixed } from 'yup';
 
 export const Context = React.createContext();
 
 const Provider = ({ children }) => {
+
+  let libraryItemSchema = array().of(object().shape({
+    item: string().required(),
+    item_description: string().required()
+  }));
+
+  let librarySchema = array().of(object().shape({
+    title: string().required(),
+    content_type: number().required(),
+    content_items: libraryItemSchema.required()
+  }));
+
+  let menuSchema = array().of(object().shape({
+    title: string().required(),
+    description: string().required(),
+    background_image: string().required(),
+    descriptive_audio: string().required()
+  }));
+
+  let hotspotSchema = array().of(object().shape({
+    name: string().required(),
+    position: mixed(),
+    latitude: number().required().min(-90).max(90),
+    longitude: number().required().min(-180).max(80),
+    AR_overlay: string().required(),
+    panorama_image: string().required(),
+    VR_overylay: string().required(),
+    overlay_size: number().min(1).max(10),
+    overlay_offset_x: number().min(-9).max(9),
+    overlay_offset_y: number().min(-9).max(9),
+    start_audio: string().required(),
+    main_pages: menuSchema,
+    media_pages: librarySchema
+  }));
+
+  let schema = object().shape({
+    project_name: string().required(),
+    intro_audio: string(),
+    homepage_image: string(),
+    hotspots: hotspotSchema.required()
+  });
 
   const [Answers, setAnswers] = useState({
     project_name: "",
@@ -22,11 +64,19 @@ const Provider = ({ children }) => {
     setAnswers({ ...Answers, ...{ [propertytName]: value } });
   }
 
+  const checkValidity = async() => {
+    const value = await schema.isValid(Answers);
+    console.log({value})
+    console.log({ Answers })
+    return value;
+  }
+
   return (
     <Context.Provider value={{
       Answers,
       changeAnswer: (propName, val) => changeAnswer(propName, val),
-      setAnswers: answers => setAnswers(answers)
+      setAnswers: answers => setAnswers(answers),
+      checkValidity: () => checkValidity()
     }}
     >
       {children}
