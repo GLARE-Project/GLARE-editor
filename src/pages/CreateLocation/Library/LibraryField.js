@@ -143,7 +143,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
 
     return (
         <React.Fragment>
-            <div className="pure-control-group required">
+            <div className="pure-control-group">
                 <label htmlFor="content-type">Content Type</label>
                 <select name="content" id="content-type" onChange={handleSelect} value={selectedContent}>
                     {contentTypes.map((contentName, index) => {

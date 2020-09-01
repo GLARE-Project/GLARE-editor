@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
+import { toast } from "react-toastify";
 import "./CreateProject.scss"
 import { Context } from "./../../App"
 import createFileList from "./../../utils/utils";
@@ -14,15 +15,21 @@ const CreateProject = () => {
     // generate the download URL
     const generateURL = useCallback(() => {
         // if the data is valid we'll generate the blob
-        checkValidity().then(ValidityState => { 
+        checkValidity().then(ValidityState => {
             if (ValidityState === true) {
                 const jsonData = JSON.stringify(Answers);
                 // turn it into a blob object
                 const blob = new Blob([jsonData], { type: "application/json" })
                 // create blob url for the browser to download
                 setURL(URL.createObjectURL(blob));
+                // only alert if the project name is set and has a hotspot
+            } else if (Answers.project_name !== "" && Answers.hotspots.length > 0) {
+                toast('Not all the required data has been populated! Please check each hotspot to verify the required fields have been filled in.', {
+                    type: toast.TYPE.ERROR,
+                    draggablePercent: 50
+                });
             }
-        }); 
+        });
     }, [Answers, checkValidity]);
 
     // on load, if the id exists, load its data
