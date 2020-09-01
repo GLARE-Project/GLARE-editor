@@ -65,10 +65,7 @@ const Provider = ({ children }) => {
   }
 
   const checkValidity = async() => {
-    const value = await schema.isValid(Answers);
-    console.log({value})
-    console.log({ Answers })
-    return value;
+    return await schema.isValid(Answers);;
   }
 
   return (

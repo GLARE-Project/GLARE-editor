@@ -50,7 +50,7 @@ const MenuField = ({ handleMenu, menuItems }) => {
                 return (
                     <React.Fragment key={index}>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`menu-title-${index}`}>Menu Link Title</label>
                             <input
                                 type="text" id={`menu-title-${index}`} placeholder="enter title"
@@ -59,7 +59,7 @@ const MenuField = ({ handleMenu, menuItems }) => {
                             />
                         </div>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`menu-descript-${index}`}>Menu Link Description</label>
                             <input
                                 type="text" id={`menu-descript-${index}`} placeholder="enter description"
@@ -68,7 +68,7 @@ const MenuField = ({ handleMenu, menuItems }) => {
                             />
                         </div>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`menu-bg-image-${index}`}>Background Image</label>
                             <input
                                 type="file" id={`menu-bg-image-${index}`} placeholder="select image" accept="image/*"
@@ -76,7 +76,7 @@ const MenuField = ({ handleMenu, menuItems }) => {
                             />
                         </div>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`menu-audio-${index}`}>Descriptive Audio</label>
                             <input
                                 type="file" id={`menu-audio-${index}`} placeholder="select audio" accept="audio/*"

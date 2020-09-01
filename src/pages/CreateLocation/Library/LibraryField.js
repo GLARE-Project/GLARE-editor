@@ -143,7 +143,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
 
     return (
         <React.Fragment>
-            <div className="pure-control-group">
+            <div className="pure-control-group required">
                 <label htmlFor="content-type">Content Type</label>
                 <select name="content" id="content-type" onChange={handleSelect} value={selectedContent}>
                     {contentTypes.map((contentName, index) => {
@@ -161,7 +161,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                 return (
                     <React.Fragment key={index}>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`content-image-${index}`}>Image file</label>
                             <input
                                 type="file" id={`content-image-${index}`} placeholder="select image" accept="image/*"
@@ -169,7 +169,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                             />
                         </div>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`picture-descript-${index}`}>Picture Caption</label>
                             <input
                                 type="text" id={`picture-descript-${index}`} placeholder="enter caption"
@@ -187,7 +187,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                 return (
                     <React.Fragment key={index}>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`content-audio-${index}`}>Audio Link</label>
                             <input
                                 type="text" id={`content-audio-${index}`} placeholder="Audio Link"
@@ -196,7 +196,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                             />
                         </div>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`audio-descript-${index}`}>Audio Description</label>
                             <input
                                 type="text" id={`audio-descript-${index}`} placeholder="enter description"
@@ -214,7 +214,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                 return (
                     <React.Fragment key={index}>
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`content-link-${index}`}>Link URL</label>
                             <input
                                 type="text" id={`content-link-${index}`} placeholder="enter link"
@@ -224,7 +224,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                         </div>
 
 
-                        <div className="pure-control-group">
+                        <div className="pure-control-group required">
                             <label htmlFor={`link-descript-${index}`}>Content Description</label>
                             <input
                                 type="text" id={`link-descript-${index}`} placeholder="enter description"

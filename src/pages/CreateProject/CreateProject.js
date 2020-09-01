@@ -48,7 +48,7 @@ const CreateProject = () => {
             <div className="pure-form pure-form-aligned">
                 <h1>New Project</h1>
                 <h2>Homepage Content</h2>
-                <div className="pure-control-group">
+                <div className="pure-control-group required">
                     <label htmlFor="project-name">Project Name</label>
                     <input
                         type="text" id="project-name" placeholder="enter project name"

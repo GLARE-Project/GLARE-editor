@@ -158,7 +158,12 @@ input[type="text"], input[type="number"] {
   border: none;
   border-bottom: 4px solid #91d3e1 !important;  
 }
-
+.required label:after {
+  content: "*";
+  display: inline-block;
+  color: red;
+  margin-left: .25em;
+}
 input[type="file"]{
   color: white;
 }

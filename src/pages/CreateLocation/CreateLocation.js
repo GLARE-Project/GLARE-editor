@@ -83,7 +83,7 @@ function CreateLocation() {
   return (
     <div className="newConfigMain">
       <div className="pure-form pure-form-aligned">
-       <div className="pure-control-group">
+       <div className="pure-control-group required">
         <label htmlFor="hotspot-name">Hotspot name</label>
         <input
           type="text" id="hotspot-name" placeholder="enter name"
@@ -98,7 +98,7 @@ function CreateLocation() {
         currentLongitude={hotspotData.longitude}
       />
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="latitude">Latitude</label>
         <input
           type="number" id="latitude" placeholder="enter latitude" min={-90} max={90}
@@ -107,7 +107,7 @@ function CreateLocation() {
         />
       </div>
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="longitude">Longitude</label>
         <input
           type="number" id="longitude" placeholder="enter longitude" min={-180} max={80}
@@ -117,7 +117,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="ar-overlay">AR Overlay</label>
         <input
           type="file" id="ar-overlay" placeholder="select image" accept="image/*"
@@ -127,7 +127,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="panorama-img">Panorama image</label>
         <input
           type="file" id="panorama-img" placeholder="select image" accept="image/*"
@@ -137,7 +137,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="vr-overlay">VR Overlay</label>
         <input
           type="file" id="vr-overlay" placeholder="select image" accept="image/*"
@@ -146,7 +146,7 @@ function CreateLocation() {
         
       </div>
 
-      <div className="pure-control-group">
+      <div className="pure-control-group required">
         <label htmlFor="narration-audio">Narration Audio</label>
         <input
           type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
