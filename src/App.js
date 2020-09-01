@@ -65,9 +65,6 @@ function App() {
                   <li className="pure-menu-item">
                     <NavLink className="pure-menu-link" to='/update'>Project Name</NavLink>
                   </li>
-                  <li className="pure-menu-item">
-                    <NavLink className="pure-menu-link" to='/'>Poems</NavLink>
-                  </li>
                 </ul>
               </li>
 
@@ -93,7 +90,6 @@ function App() {
             <nav className={"side-nav"}>
               <ul>
                 <li><NavLink to='/project'>Homepage Content</NavLink></li>
-                <li><NavLink to='/menu'>Menu Content</NavLink></li>
               </ul>
             </nav>
             <h3>Hotspots</h3>
