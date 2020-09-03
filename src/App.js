@@ -5,12 +5,14 @@ import CreateProject from "./pages/CreateProject/CreateProject";
 import UpdateProject from "./pages/UpdateProject/UpdateProject";
 import FAQ from "./pages/FAQ/FAQ.js";
 import CreateLocation from "./pages/CreateLocation/CreateLocation"
-import { Switch, Route, NavLink } from 'react-router-dom';
+import { Switch, Route, NavLink, useHistory } from 'react-router-dom';
 import { string, object, number, array, mixed } from 'yup';
 
 export const Context = React.createContext();
 
 const Provider = ({ children }) => {
+
+  const history = useHistory();
 
   let libraryItemSchema = array().of(object().shape({
     item: string().required(),
@@ -64,8 +66,21 @@ const Provider = ({ children }) => {
     setAnswers({ ...Answers, ...{ [propertytName]: value } });
   }
 
-  const checkValidity = async() => {
+  const checkValidity = async () => {
     return await schema.isValid(Answers);;
+  }
+
+  const loadExample = async () => {
+    await fetch(process.env.PUBLIC_URL + "/markers.json")
+      .then(res => res.json())
+      .then(res => {
+        if (res.hasOwnProperty("hotspots")) {
+          setAnswers(res);
+          history.push({
+            pathname: '/project'
+          })
+        }
+      });
   }
 
   return (
@@ -73,7 +88,8 @@ const Provider = ({ children }) => {
       Answers,
       changeAnswer: (propName, val) => changeAnswer(propName, val),
       setAnswers: answers => setAnswers(answers),
-      checkValidity: () => checkValidity()
+      checkValidity: () => checkValidity(),
+      loadExample: () => loadExample()
     }}
     >
       {children}
@@ -82,12 +98,13 @@ const Provider = ({ children }) => {
 }
 
 
-function App() {
+const App = () => {
+
   return (
     <Provider>
       <div className="app">
         <nav className={"top-nav"}>
-          
+
           <div className="pure-menu pure-menu-horizontal">
             <ul className="pure-menu-list">
               <li className="pure-menu-item">
@@ -100,9 +117,15 @@ function App() {
                   <li className="pure-menu-item">
                     <NavLink className="pure-menu-link" to='/project'>Configuration Editor</NavLink>
                   </li>
-                  <li className="pure-menu-item">
-                    <NavLink className="pure-menu-link" to='/'>Expert Configuration</NavLink>
-                  </li>
+                  <Context.Consumer>
+                    {({ loadExample }) => {
+                      return (
+                        <li className="pure-menu-item">
+                          <div tabIndex="0" className="pure-menu-link" onClick={loadExample}>Expert Configuration</div>
+                        </li>
+                      )
+                    }}
+                  </Context.Consumer>
                 </ul>
               </li>
 

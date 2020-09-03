@@ -96,8 +96,15 @@ nav ul li a {
   background-color: #0a4388;
   z-index: 401;
 }
-.top-nav .pure-menu-allow-hover:hover > .pure-menu-children a {
+
+.top-nav .pure-menu-allow-hover:hover > .pure-menu-children * {
+  cursor: pointer;
   color: white;
+}
+
+.top-nav .pure-menu-allow-hover:hover > .pure-menu-children *:hover,
+.top-nav .pure-menu-allow-hover:hover > .pure-menu-children *:focus {
+  color: #ffc400;
 }
 
 .top-nav ul li a {
@@ -110,8 +117,14 @@ nav ul li a {
   flex-direction: column; 
   padding-bottom: 8px;
 }
+
 .side-nav ul li a {
   color: white;
+}
+
+.side-nav ul li a:hover, .side-nav ul li a:focus, 
+.hotspot-nav ul li a:hover, .hotspot-nav ul li a:focus{
+  color: #91d3e1;
 }
 
 
