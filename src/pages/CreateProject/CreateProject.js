@@ -81,7 +81,10 @@ const CreateProject = () => {
                 </div>
 
                 <br />
-                {downloadURL && (<a className="pure-button download-btn" href={downloadURL} download="markers.json">Download File</a>)}
+                {downloadURL && (<>
+                    <a className="pure-button download-btn" href={downloadURL} download="markers.json">Download Configuration File</a>
+                    <a className="pure-button download-btn" href={`${process.env.PUBLIC_URL}/server-files.zip`} download="server-files.zip">Download Server Files</a>
+                </>)}
             </div>
         </div>
     )
