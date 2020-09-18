@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/GLARE-editor/precache-manifest.cdda6c168b1facc3dcc0438046e784f6.js"
+  "/GLARE-editor/precache-manifest.e4d3d1da0571f1d639e463eef35b6972.js"
 );
 
 self.addEventListener('message', (event) => {
