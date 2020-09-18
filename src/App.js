@@ -37,13 +37,13 @@ const Provider = ({ children }) => {
     position: mixed(),
     latitude: number().required().min(-90).max(90),
     longitude: number().required().min(-180).max(80),
-    AR_overlay: string().required(),
-    panorama_image: string().required(),
-    VR_overylay: string().required(),
+    AR_overlay: string(),
+    panorama_image: string(),
+    VR_overylay: string(),
     overlay_size: number().min(1).max(10),
     overlay_offset_x: number().min(-9).max(9),
     overlay_offset_y: number().min(-9).max(9),
-    start_audio: string().required(),
+    start_audio: string(),
     main_pages: menuSchema,
     media_pages: librarySchema
   }));

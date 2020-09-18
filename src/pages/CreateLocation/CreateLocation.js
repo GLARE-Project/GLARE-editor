@@ -117,7 +117,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group required">
+      <div className="pure-control-group">
         <label htmlFor="ar-overlay">AR Overlay</label>
         <input
           type="file" id="ar-overlay" placeholder="select image" accept="image/*"
@@ -127,7 +127,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group required">
+      <div className="pure-control-group">
         <label htmlFor="panorama-img">Panorama image</label>
         <input
           type="file" id="panorama-img" placeholder="select image" accept="image/*"
@@ -137,7 +137,7 @@ function CreateLocation() {
       </div>
 
 
-      <div className="pure-control-group required">
+      <div className="pure-control-group">
         <label htmlFor="vr-overlay">VR Overlay</label>
         <input
           type="file" id="vr-overlay" placeholder="select image" accept="image/*"
@@ -146,7 +146,7 @@ function CreateLocation() {
         
       </div>
 
-      <div className="pure-control-group required">
+      <div className="pure-control-group">
         <label htmlFor="narration-audio">Narration Audio</label>
         <input
           type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
