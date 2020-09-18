@@ -8,14 +8,15 @@ import createFileList from "./../../utils/utils";
 import './CreateLocation.css';
 
 
-function CreateLocation() {
+function CreateLocation( { history } ) {
 
   const { Answers, changeAnswer } = useContext(Context);
 
   const { id } = useParams();
+
   const [currentID, setCurrentID] = useState(id);
 
-  const [hotspotData, setHotspotData] = useState({
+  const INITIAL_STATE = {
     // location related
     name: "",
     latitude: 0,
@@ -34,10 +35,12 @@ function CreateLocation() {
     main_pages: [],
     // the library
     media_pages: []
-  });
+  };
+  const [hotspotData, setHotspotData] = useState(INITIAL_STATE);
 
   // on load, if the id exists, load its data
   useEffect(() => {
+
     if (id !== "new" && Answers.hotspots.length > id) {
       const hotspotData = Answers.hotspots[id];
       setHotspotData(hotspotData);
@@ -46,14 +49,21 @@ function CreateLocation() {
       document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
       document.querySelector("#vr-overlay").files = createFileList(hotspotData.VR_overylay);
       document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
+    } else if (id !== currentID) {
+      // update the state to match the parameter
+      setCurrentID(id);
+      // and reset data
+      setHotspotData(INITIAL_STATE);
+
     }
-  }, [Answers.hotspots, id])
+  }, [Answers.hotspots, id, currentID, INITIAL_STATE])
 
   const handleProjectSave = updatedAnswer => {
     // we add the new item to the array and set it to the current hotspot
     if (currentID === "new") {
       setCurrentID(Answers.hotspots.length);
       changeAnswer("hotspots", [...Answers.hotspots, updatedAnswer]);
+      history.replace("/hotspot/" + Answers.hotspots.length)
     // we only need to update the existing data
     } else {
       let old = Answers.hotspots;
