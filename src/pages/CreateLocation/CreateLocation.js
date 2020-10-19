@@ -12,13 +12,14 @@ function CreateLocation( { history } ) {
 
   const { Answers, changeAnswer } = useContext(Context);
 
-  const { id } = useParams();
+  const { hotspots } = Answers;
 
-  const [currentID, setCurrentID] = useState(id);
+  const { id } = useParams();
 
   const INITIAL_STATE = {
     // location related
     name: "",
+    position: null,
     latitude: 0,
     longitude: 0,
     // AR related
@@ -37,37 +38,42 @@ function CreateLocation( { history } ) {
     media_pages: []
   };
   const [hotspotData, setHotspotData] = useState(INITIAL_STATE);
+  const [hasChanged, setHasChanged] = useState(false);
 
   // on load, if the id exists, load its data
   useEffect(() => {
-
-    if (id !== "new" && Answers.hotspots.length > id) {
-      const hotspotData = Answers.hotspots[id];
+    
+    // load the hotspot at the id's postiion if it exists
+    if (id !== "new" && hotspots.length > parseInt(id)) {
+      const hotspotData = hotspots[parseInt(id)];
       setHotspotData(hotspotData);
       // improper way of doing it, but can't seem to set files attribute properly
       document.querySelector("#ar-overlay").files = createFileList(hotspotData.AR_overlay);
       document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
       document.querySelector("#vr-overlay").files = createFileList(hotspotData.VR_overylay);
       document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
-    } else if (id !== currentID) {
-      // update the state to match the parameter
-      setCurrentID(id);
-      // and reset data
+      setHasChanged(true);
+    } else if ( id === "new" && hasChanged) {
       setHotspotData(INITIAL_STATE);
+      document.querySelector("#ar-overlay").files = createFileList([]);
+      document.querySelector("#panorama-img").files = createFileList([]);
+      document.querySelector("#vr-overlay").files = createFileList([]);
+      document.querySelector("#narration-audio").files = createFileList([]);
+      setHasChanged(false);
 
     }
-  }, [Answers.hotspots, id, currentID, INITIAL_STATE])
+  }, [hotspots, id, INITIAL_STATE, hasChanged]);
 
   const handleProjectSave = updatedAnswer => {
-    // we add the new item to the array and set it to the current hotspot
-    if (currentID === "new") {
-      setCurrentID(Answers.hotspots.length);
-      changeAnswer("hotspots", [...Answers.hotspots, updatedAnswer]);
-      history.replace("/hotspot/" + Answers.hotspots.length)
+    // we add the new item to the array and set it's position
+    if (id === "new") {
+      const position = hotspots.length;
+      changeAnswer("hotspots", [...hotspots, { ...updatedAnswer , position } ]);
+      history.replace("/hotspot/" + position);
     // we only need to update the existing data
     } else {
-      let old = Answers.hotspots;
-      old[currentID] = updatedAnswer;
+      let old = hotspots;
+      old[parseInt(id)] = updatedAnswer;
       changeAnswer("hotspots", old)
     }
   };
@@ -76,7 +82,6 @@ function CreateLocation( { history } ) {
   const handleChange = (objectName, value) => {
     // set the new answer value
     const newAnswer = { ...hotspotData, ...{ [objectName]: value } };
-    setHotspotData(newAnswer);
     handleProjectSave(newAnswer)
   };
 
@@ -86,7 +91,6 @@ function CreateLocation( { history } ) {
       latitude: lat,
       longitude: lng
     };
-    setHotspotData(newAnswer);
     handleProjectSave(newAnswer);
   }
 
