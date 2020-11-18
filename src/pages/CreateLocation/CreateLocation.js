@@ -22,11 +22,9 @@ function CreateLocation( { history } ) {
     position: null,
     latitude: 0,
     longitude: 0,
-    // AR related
-    AR_overlay: "",
+    overlay: "",
     // VR related
     panorama_image: "",
-    VR_overylay: "",
     overlay_size: 10,
     overlay_offset_x: 0,
     overlay_offset_y: 0,
@@ -48,16 +46,14 @@ function CreateLocation( { history } ) {
       const hotspotData = hotspots[parseInt(id)];
       setHotspotData(hotspotData);
       // improper way of doing it, but can't seem to set files attribute properly
-      document.querySelector("#ar-overlay").files = createFileList(hotspotData.AR_overlay);
       document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
-      document.querySelector("#vr-overlay").files = createFileList(hotspotData.VR_overylay);
+      document.querySelector("#overlay").files = createFileList(hotspotData.overlay);
       document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
       setHasChanged(true);
     } else if ( id === "new" && hasChanged) {
       setHotspotData(INITIAL_STATE);
-      document.querySelector("#ar-overlay").files = createFileList([]);
       document.querySelector("#panorama-img").files = createFileList([]);
-      document.querySelector("#vr-overlay").files = createFileList([]);
+      document.querySelector("#overlay").files = createFileList([]);
       document.querySelector("#narration-audio").files = createFileList([]);
       setHasChanged(false);
 
@@ -132,10 +128,10 @@ function CreateLocation( { history } ) {
 
 
       <div className="pure-control-group">
-        <label htmlFor="ar-overlay">AR Overlay</label>
+        <label htmlFor="overlay">Overlay image</label>
         <input
-          type="file" id="ar-overlay" placeholder="select image" accept="image/*"
-          onChange={e => handleChange("AR_overlay", e.target.files[0]['name'])}
+          type="file" id="overlay" placeholder="select image" accept="image/*"
+          onChange={e => handleChange("overlay", e.target.files[0]['name'])}
         />
         
       </div>
@@ -149,17 +145,7 @@ function CreateLocation( { history } ) {
         />
         
       </div>
-
-
-      <div className="pure-control-group">
-        <label htmlFor="vr-overlay">VR Overlay</label>
-        <input
-          type="file" id="vr-overlay" placeholder="select image" accept="image/*"
-          onChange={e => handleChange("VR_overylay", e.target.files[0]['name'])}
-        />
         
-      </div>
-
       <div className="pure-control-group">
         <label htmlFor="narration-audio">Narration Audio</label>
         <input
