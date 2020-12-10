@@ -7,6 +7,7 @@ import FAQ from "./pages/FAQ/FAQ.js";
 import CreateLocation from "./pages/CreateLocation/CreateLocation"
 import { Switch, Route, NavLink, useHistory } from 'react-router-dom';
 import { string, object, number, array, mixed } from 'yup';
+import Graph from "./utils/Graph";
 
 export const Context = React.createContext();
 
@@ -61,6 +62,8 @@ const Provider = ({ children }) => {
     hotspots: [],
   });
 
+  const [hotspotGraph] = useState(new Graph());
+
   const changeAnswer = (propertytName, value) => {
     setAnswers({ ...Answers, ...{ [propertytName]: value } });
   }
@@ -69,12 +72,20 @@ const Provider = ({ children }) => {
     return await schema.isValid(Answers);;
   }
 
+  // generate the graph when the hotspots are loaded all at once
+  const generateGraph = ({ hotspots }) => {
+    hotspots.filter(hotspot => !hotspot.isSubHotspot).forEach((_, hotspotIndex) => {
+      hotspotGraph.addVertice(hotspots, hotspotIndex);
+    });
+  }
+
   const loadExample = async () => {
     await fetch(process.env.PUBLIC_URL + "/markers.json")
       .then(res => res.json())
       .then(res => {
         if (res.hasOwnProperty("hotspots")) {
           setAnswers(res);
+          generateGraph(res);
           history.push({
             pathname: '/project'
           })
@@ -88,7 +99,8 @@ const Provider = ({ children }) => {
       changeAnswer: (propName, val) => changeAnswer(propName, val),
       setAnswers: answers => setAnswers(answers),
       checkValidity: () => checkValidity(),
-      loadExample: () => loadExample()
+      loadExample: () => loadExample(),
+      hotspotGraph: hotspotGraph
     }}
     >
       {children}

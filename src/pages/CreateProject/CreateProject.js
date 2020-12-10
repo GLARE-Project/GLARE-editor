@@ -6,17 +6,86 @@ import createFileList from "./../../utils/utils";
 
 const CreateProject = () => {
 
-    const { Answers, changeAnswer, checkValidity } = useContext(Context);
+    const { Answers, changeAnswer, checkValidity, hotspotGraph } = useContext(Context);
 
     const [localAnswers, setLocalAnswers] = useState({ project_name: "" });
 
     const [downloadURL, setURL] = useState(null);
+
+
+    const AlertTooClose = ({ hotspotsData, hotspotIndex, closestHotspotIndex }) => {
+        return (
+            <div>
+                <p>
+                    Appears that {hotspotsData[hotspotIndex].name} is too close to {hotspotsData[closestHotspotIndex].name}. Would you like to combine them?
+                    <button onClick={() => {
+                        // TODO: when combing hotspots, remove from this vertex's all neighbors
+                        // could do hotspotGraph.adjancyList.get(old[closestHotspotIndex].position).neighbors -> [a, b, c]
+                        // then loop these neighbors list and remove this value from their neighbor's list
+                        // aka hotspotGraph.adjancyList.get(neighbor).remove(old[closestHotspotIndex)
+                        let old = hotspotsData;
+                        old[closestHotspotIndex].isSubHotspot = true;
+                        changeAnswer("hotspots", old);
+                    }}>
+                        Yes
+                    </button>
+                </p>
+            </div>
+        );
+    }
+
+    const promptMerge = (hotspotsData, hotspotIndex, closestHotspotIndex) => {
+        const { isSubHotspot } = hotspotsData[closestHotspotIndex];
+        if (!isSubHotspot)
+            toast(<AlertTooClose hotspotsData={hotspotsData} hotspotIndex={hotspotIndex} closestHotspotIndex={closestHotspotIndex} />, {
+                type: toast.TYPE.WARNING,
+                autoClose: false,
+                draggablePercent: 50
+            });
+    }
+
+    const checkHotspotProximity = useCallback(({ hotspots }) => {
+
+        toast.dismiss();
+
+        if (hotspots.length > 0) {
+
+            const itemsLeft = new Map(hotspotGraph.adjancyList);
+            const tooClose = new Map();
+
+
+            // TODO: rewritten to get the most efficent parent / children combos
+            itemsLeft.forEach(adjancyValue => {
+                // if there is too close neighbors
+                if (adjancyValue.neighbors.length > 0) {
+                    // then the vertex is too close to other vertices
+                    adjancyValue.neighbors.forEach(neighbor => {
+                        const { index } = hotspotGraph.adjancyList.get(neighbor);
+                        const previousValue = tooClose.get(adjancyValue.index) || [];
+                        tooClose.set(adjancyValue.index, [...previousValue, index]);
+                        itemsLeft.delete(neighbor)
+                    });
+                }
+            });
+
+            // TODO: only show one at a time
+            tooClose.forEach((tooCloseIndices, tooCloseParent) => {
+                tooCloseIndices.forEach(closestHotspotIndex => {
+                    promptMerge(hotspots, tooCloseParent, closestHotspotIndex);
+                });
+            });
+
+        }
+
+    }, [hotspotGraph]);
 
     // generate the download URL
     const generateURL = useCallback(() => {
         // if the data is valid we'll generate the blob
         checkValidity().then(ValidityState => {
             if (ValidityState === true) {
+                // check for the points too close for GPS and alert the user
+                checkHotspotProximity(Answers);
                 const jsonData = JSON.stringify(Answers);
                 // turn it into a blob object
                 const blob = new Blob([jsonData], { type: "application/json" })
@@ -30,7 +99,7 @@ const CreateProject = () => {
                 });
             }
         });
-    }, [Answers, checkValidity]);
+    }, [Answers, checkValidity, checkHotspotProximity]);
 
     // on load, if the id exists, load its data
     useEffect(() => {
