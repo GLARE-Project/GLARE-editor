@@ -15,20 +15,22 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
 
 
     useEffect(() => {
-        const picturesMedia = destructorObject(libraryPages.filter(media => media.title === "Pictures").pop());
-        // cheap way of checking if two arrays are different - to prevent dependency exhaust
-        if (JSON.stringify(pictures) === JSON.stringify(picturesMedia))
-            pictures.forEach((pictureObj, index) => {
-                document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
-            });
-        else SetPictures(picturesMedia)
+        // if data exists then properly set it up
+        if (libraryPages) {
+            const picturesMedia = destructorObject(libraryPages.filter(({title}) => title === "Pictures").pop());
+            // cheap way of checking if two arrays are different - to prevent dependency exhaust
+            if (JSON.stringify(pictures) === JSON.stringify(picturesMedia))
+                pictures.forEach((pictureObj, index) => {
+                    document.querySelector(`#content-image-${index}`).files = createFileList(pictureObj.item);
+                });
+            else SetPictures(picturesMedia)
 
-        const audioMedia = destructorObject(libraryPages.filter(media => media.title === "Audio").pop());
-        SetAudio(audioMedia);
+            const audioMedia = destructorObject(libraryPages.filter(({title}) => title === "Audio").pop());
+            SetAudio(audioMedia);
 
-        const linksMedia = destructorObject(libraryPages.filter(media => media.title === "Links").pop());
-        SetLinks(linksMedia);
-
+            const linksMedia = destructorObject(libraryPages.filter(({title}) => title === "Links").pop());
+            SetLinks(linksMedia);
+        }
     }, [libraryPages, pictures]); // picture isn't added to dependency since adding a new item will result cause a reload
 
 
