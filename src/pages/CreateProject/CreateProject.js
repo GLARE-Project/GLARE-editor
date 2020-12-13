@@ -19,12 +19,9 @@ const CreateProject = () => {
                 <p>
                     Appears that {hotspotsData[hotspotIndex].name} is too close to {hotspotsData[closestHotspotIndex].name}. Would you like to combine them?
                     <button onClick={() => {
-                        // TODO: when combing hotspots, remove from this vertex's all neighbors
-                        // could do hotspotGraph.adjancyList.get(old[closestHotspotIndex].position).neighbors -> [a, b, c]
-                        // then loop these neighbors list and remove this value from their neighbor's list
-                        // aka hotspotGraph.adjancyList.get(neighbor).remove(old[closestHotspotIndex)
                         let old = hotspotsData;
                         old[closestHotspotIndex].isSubHotspot = true;
+                        hotspotGraph.removeVertex(old[closestHotspotIndex].position);
                         changeAnswer("hotspots", old);
                     }}>
                         Yes
@@ -35,13 +32,11 @@ const CreateProject = () => {
     }
 
     const promptMerge = (hotspotsData, hotspotIndex, closestHotspotIndex) => {
-        const { isSubHotspot } = hotspotsData[closestHotspotIndex];
-        if (!isSubHotspot)
-            toast(<AlertTooClose hotspotsData={hotspotsData} hotspotIndex={hotspotIndex} closestHotspotIndex={closestHotspotIndex} />, {
-                type: toast.TYPE.WARNING,
-                autoClose: false,
-                draggablePercent: 50
-            });
+        toast(<AlertTooClose hotspotsData={hotspotsData} hotspotIndex={hotspotIndex} closestHotspotIndex={closestHotspotIndex} />, {
+            type: toast.TYPE.WARNING,
+            autoClose: false,
+            draggablePercent: 50
+        });
     }
 
     const checkHotspotProximity = useCallback(({ hotspots }) => {
@@ -53,16 +48,17 @@ const CreateProject = () => {
             const itemsLeft = new Map(hotspotGraph.adjancyList);
             const tooClose = new Map();
 
-
             // TODO: rewritten to get the most efficent parent / children combos
             itemsLeft.forEach(adjancyValue => {
                 // if there is too close neighbors
                 if (adjancyValue.neighbors.length > 0) {
                     // then the vertex is too close to other vertices
                     adjancyValue.neighbors.forEach(neighbor => {
-                        const { index } = hotspotGraph.adjancyList.get(neighbor);
+                        const { index } = itemsLeft.get(neighbor);
+                        // add the new item to the exisiting map of too close item
                         const previousValue = tooClose.get(adjancyValue.index) || [];
                         tooClose.set(adjancyValue.index, [...previousValue, index]);
+                        // remove this vertex from being checked again
                         itemsLeft.delete(neighbor)
                     });
                 }

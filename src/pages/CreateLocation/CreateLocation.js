@@ -75,7 +75,7 @@ function CreateLocation( { history } ) {
       // if a valid id and hasn't been added to the graph adjancy list with valid coordinates
       // then add it as a vertex (could warn the users here too)
       if (!hotspotGraph.adjancyList.has(id) && old.latitude !== 0 && old.longitude !== 0) 
-        hotspotGraph.addVertice(old, parseInt(id));
+        hotspotGraph.addVertex(old, parseInt(id));
     }
   };
 

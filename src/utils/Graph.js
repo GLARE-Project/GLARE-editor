@@ -40,7 +40,7 @@ class Graph {
     }
 
     // input: hotspot data and index pointing to the vertex's data
-    addVertice(hotspotData, index) {
+    addVertex(hotspotData, index) {
 
         // destruct the data for the vertex
         const { latitude, longitude, position } = hotspotData[index];
@@ -56,6 +56,17 @@ class Graph {
             }
             
         });
+    }
+
+    removeVertex(v) {
+        // remove all the references of vertex v from neighbors
+        this.adjancyList.get(v).neighbors.forEach(neighbor => {
+            const index = this.adjancyList.get(neighbor).neighbors.indexOf(v);
+            if (index !== -1) // make sure the neighbor exists
+                this.adjancyList.get(neighbor).neighbors.splice(index, 1);
+        });
+        // finally, remove the vertex from the adjancy list 
+        this.adjancyList.delete(v);
     }
 
     addEdge(v, w) {

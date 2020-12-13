@@ -75,7 +75,7 @@ const Provider = ({ children }) => {
   // generate the graph when the hotspots are loaded all at once
   const generateGraph = ({ hotspots }) => {
     hotspots.filter(hotspot => !hotspot.isSubHotspot).forEach((_, hotspotIndex) => {
-      hotspotGraph.addVertice(hotspots, hotspotIndex);
+      hotspotGraph.addVertex(hotspots, hotspotIndex);
     });
   }
 
