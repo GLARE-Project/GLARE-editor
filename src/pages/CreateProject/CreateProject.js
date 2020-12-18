@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "./CreateProject.scss"
 import { Context } from "./../../App"
 import createFileList from "./../../utils/utils";
+import AlertTooClose from "./AlertTooClose";
 
 const CreateProject = () => {
 
@@ -12,32 +13,13 @@ const CreateProject = () => {
 
     const [downloadURL, setURL] = useState(null);
 
-
-    const AlertTooClose = ({ hotspotsData, hotspotIndex, closestHotspotIndex }) => {
-        return (
-            <div>
-                <p>
-                    Appears that {hotspotsData[hotspotIndex].name} is too close to {hotspotsData[closestHotspotIndex].name}. Would you like to combine them?
-                    <button onClick={() => {
-                        let old = hotspotsData;
-                        old[closestHotspotIndex].isSubHotspot = true;
-                        hotspotGraph.removeVertex(old[closestHotspotIndex].position);
-                        changeAnswer("hotspots", old);
-                    }}>
-                        Yes
-                    </button>
-                </p>
-            </div>
-        );
-    }
-
-    const promptMerge = (hotspotsData, hotspotIndex, closestHotspotIndex) => {
-        toast(<AlertTooClose hotspotsData={hotspotsData} hotspotIndex={hotspotIndex} closestHotspotIndex={closestHotspotIndex} />, {
+    const promptMerge = useCallback((props) => {
+        toast(<AlertTooClose {...props} hotspotGraph={hotspotGraph} changeAnswer={changeAnswer} />, {
             type: toast.TYPE.WARNING,
             autoClose: false,
             draggablePercent: 50
         });
-    }
+    }, [changeAnswer, hotspotGraph]);
 
     const checkHotspotProximity = useCallback(({ hotspots }) => {
 
@@ -48,7 +30,9 @@ const CreateProject = () => {
             const itemsLeft = new Map(hotspotGraph.adjancyList);
             const tooClose = new Map();
 
-            // TODO: rewritten to get the most efficent parent / children combos
+
+            // TODO: tooClose should be take into account prioritize the itemsLeft's parent with the highest neighbors
+            // The current method is delete the first, but the most neighbors would be the most efficent
             itemsLeft.forEach(adjancyValue => {
                 // if there is too close neighbors
                 if (adjancyValue.neighbors.length > 0) {
@@ -64,16 +48,13 @@ const CreateProject = () => {
                 }
             });
 
-            // TODO: only show one at a time
-            tooClose.forEach((tooCloseIndices, tooCloseParent) => {
-                tooCloseIndices.forEach(closestHotspotIndex => {
-                    promptMerge(hotspots, tooCloseParent, closestHotspotIndex);
-                });
+            tooClose.forEach((tooCloseIndices, parentIndex) => {
+                promptMerge({hotspots, parentIndex, tooCloseIndices});
             });
 
         }
 
-    }, [hotspotGraph]);
+    }, [hotspotGraph, promptMerge]);
 
     // generate the download URL
     const generateURL = useCallback(() => {
