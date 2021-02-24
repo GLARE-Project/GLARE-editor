@@ -6,14 +6,15 @@ const MenuField = ({ handleMenu, menuItems }) => {
     const [menu, setMenu] = useState([]);
 
     useEffect(() => {
-
-        if (JSON.stringify(menu) === JSON.stringify(menuItems))
-            menuItems.forEach((menuObj, index) => {
-                document.querySelector(`#menu-bg-image-${index}`).files = createFileList(menuObj.background_image);
-                document.querySelector(`#menu-audio-${index}`).files = createFileList(menuObj.descriptive_audio);
-            });
-        else setMenu(menuItems)
-
+        // if data exists then properly set it up
+        if (menuItems) {
+            if (JSON.stringify(menu) === JSON.stringify(menuItems))
+                menuItems.forEach((menuObj, index) => {
+                    document.querySelector(`#menu-bg-image-${index}`).files = createFileList(menuObj.background_image);
+                    document.querySelector(`#menu-audio-${index}`).files = createFileList(menuObj.descriptive_audio);
+                });
+            else setMenu(menuItems)
+        }
     }, [menuItems, menu]);
 
     // add the inital link object to the queue

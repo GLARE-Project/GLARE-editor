@@ -10,7 +10,7 @@ import './CreateLocation.css';
 
 function CreateLocation( { history } ) {
 
-  const { Answers, changeAnswer } = useContext(Context);
+  const { Answers, changeAnswer, hotspotGraph } = useContext(Context);
 
   const { hotspots } = Answers;
 
@@ -23,6 +23,7 @@ function CreateLocation( { history } ) {
     latitude: 0,
     longitude: 0,
     overlay: "",
+    isSubHotspot: false,
     // VR related
     panorama_image: "",
     overlay_size: 10,
@@ -70,7 +71,11 @@ function CreateLocation( { history } ) {
     } else {
       let old = hotspots;
       old[parseInt(id)] = updatedAnswer;
-      changeAnswer("hotspots", old)
+      changeAnswer("hotspots", old);
+      // if a valid id and hasn't been added to the graph adjancy list with valid coordinates
+      // then add it as a vertex (could warn the users here too)
+      if (!hotspotGraph.adjancyList.has(id) && old.latitude !== 0 && old.longitude !== 0) 
+        hotspotGraph.addVertex(old, parseInt(id));
     }
   };
 

@@ -60,7 +60,7 @@ nav ul li a {
 .hotspot-nav ul.hotspot-items {
   overflow: initial;
   list-style: initial;
-  list-style-position: inside;
+  list-style-position: outside;
   padding-left: .5em;
   padding-bottom: 1em;
 }

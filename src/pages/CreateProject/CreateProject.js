@@ -3,20 +3,66 @@ import { toast } from "react-toastify";
 import "./CreateProject.scss"
 import { Context } from "./../../App"
 import createFileList from "./../../utils/utils";
+import AlertTooClose from "./AlertTooClose";
 
 const CreateProject = () => {
 
-    const { Answers, changeAnswer, checkValidity } = useContext(Context);
+    const { Answers, changeAnswer, checkValidity, hotspotGraph } = useContext(Context);
 
     const [localAnswers, setLocalAnswers] = useState({ project_name: "" });
 
     const [downloadURL, setURL] = useState(null);
+
+    const promptMerge = useCallback((props) => {
+        toast(<AlertTooClose {...props} hotspotGraph={hotspotGraph} changeAnswer={changeAnswer} />, {
+            type: toast.TYPE.WARNING,
+            autoClose: false,
+            draggablePercent: 50
+        });
+    }, [changeAnswer, hotspotGraph]);
+
+    const checkHotspotProximity = useCallback(({ hotspots }) => {
+
+        toast.dismiss();
+
+        if (hotspots.length > 0) {
+
+            const itemsLeft = new Map(hotspotGraph.adjancyList);
+            const tooClose = new Map();
+
+
+            // TODO: tooClose should be take into account prioritize the itemsLeft's parent with the highest neighbors
+            // The current method is delete the first, but the most neighbors would be the most efficent
+            itemsLeft.forEach(adjancyValue => {
+                // if there is too close neighbors
+                if (adjancyValue.neighbors.length > 0) {
+                    // then the vertex is too close to other vertices
+                    adjancyValue.neighbors.forEach(neighbor => {
+                        const { index } = itemsLeft.get(neighbor);
+                        // add the new item to the exisiting map of too close item
+                        const previousValue = tooClose.get(adjancyValue.index) || [];
+                        tooClose.set(adjancyValue.index, [...previousValue, index]);
+                        // remove this vertex from being checked again
+                        itemsLeft.delete(neighbor)
+                    });
+                }
+            });
+
+            tooClose.forEach((tooCloseIndices, parentIndex) => {
+                promptMerge({hotspots, parentIndex, tooCloseIndices});
+            });
+
+        }
+
+    }, [hotspotGraph, promptMerge]);
 
     // generate the download URL
     const generateURL = useCallback(() => {
         // if the data is valid we'll generate the blob
         checkValidity().then(ValidityState => {
             if (ValidityState === true) {
+                // check for the points too close for GPS and alert the user
+                checkHotspotProximity(Answers);
                 const jsonData = JSON.stringify(Answers);
                 // turn it into a blob object
                 const blob = new Blob([jsonData], { type: "application/json" })
@@ -30,7 +76,7 @@ const CreateProject = () => {
                 });
             }
         });
-    }, [Answers, checkValidity]);
+    }, [Answers, checkValidity, checkHotspotProximity]);
 
     // on load, if the id exists, load its data
     useEffect(() => {
