@@ -79,13 +79,19 @@ const Provider = ({ children }) => {
     });
   }
 
+  // since the function changes state directly
+  // we should change state and rebuilt the graph
+  const directlyChangeAnswers = (answers) => {
+    setAnswers(answers);
+    generateGraph(answers);
+  };
+
   const loadExample = async () => {
     await fetch(process.env.PUBLIC_URL + "/markers.json")
       .then(res => res.json())
       .then(res => {
         if (res.hasOwnProperty("hotspots")) {
-          setAnswers(res);
-          generateGraph(res);
+          directlyChangeAnswers(res);
           history.push({
             pathname: '/project'
           })
@@ -97,7 +103,7 @@ const Provider = ({ children }) => {
     <Context.Provider value={{
       Answers,
       changeAnswer: (propName, val) => changeAnswer(propName, val),
-      setAnswers: answers => setAnswers(answers),
+      setAnswers: answers => directlyChangeAnswers(answers),
       checkValidity: () => checkValidity(),
       loadExample: () => loadExample(),
       hotspotGraph: hotspotGraph
