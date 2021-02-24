@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ccd5411daeb84f4b7918d692a514eb3f",
+    "revision": "7ed77f77ed91b6102ed0512b47d3a6da",
     "url": "/GLARE-editor/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/GLARE-editor/static/css/2.61e7bc16.chunk.css"
   },
   {
-    "revision": "c9b91f6d0ada5b93dac3",
+    "revision": "acc9cbd4db9fc2208d27",
     "url": "/GLARE-editor/static/css/main.25e74b87.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/GLARE-editor/static/js/2.5082f8b0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c9b91f6d0ada5b93dac3",
-    "url": "/GLARE-editor/static/js/main.9461dfaf.chunk.js"
+    "revision": "acc9cbd4db9fc2208d27",
+    "url": "/GLARE-editor/static/js/main.ccca943d.chunk.js"
   },
   {
     "revision": "8ac1fcba9cddf45e3394",
