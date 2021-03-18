@@ -4,3 +4,9 @@
 .newConfigMain .pure-form legend {
     color: #ffc400;
 }
+
+#canvas {
+    height: 20em !important;
+    margin: 1.5em 0;
+    z-index: 10;
+}

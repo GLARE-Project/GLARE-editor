@@ -1,5 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Suspense } from 'react';
 import { useParams } from "react-router-dom";
+import { CubeMapVR } from "@chrisdesigns/glare-viewer";
+import { Canvas } from 'react-three-fiber';
+import { Html } from 'drei'
 import MapField from "./Map/MapField";
 import LibraryField from "./Library/LibraryField";
 import MenuField from "./Menu/MenuField";
@@ -7,8 +10,7 @@ import { Context } from "./../../App";
 import createFileList from "./../../utils/utils";
 import './CreateLocation.css';
 
-
-function CreateLocation( { history } ) {
+function CreateLocation({ history }) {
 
   const { Answers, changeAnswer, hotspotGraph } = useContext(Context);
 
@@ -37,11 +39,13 @@ function CreateLocation( { history } ) {
     media_pages: []
   };
   const [hotspotData, setHotspotData] = useState(INITIAL_STATE);
+  const [currentPano, setPano] = useState("");
+  const [currentOverlay, setOverlay] = useState("");
   const [hasChanged, setHasChanged] = useState(false);
 
   // on load, if the id exists, load its data
   useEffect(() => {
-    
+
     // load the hotspot at the id's postiion if it exists
     if (id !== "new" && hotspots.length > parseInt(id)) {
       const hotspotData = hotspots[parseInt(id)];
@@ -51,11 +55,13 @@ function CreateLocation( { history } ) {
       document.querySelector("#overlay").files = createFileList(hotspotData.overlay);
       document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
       setHasChanged(true);
-    } else if ( id === "new" && hasChanged) {
+    } else if (id === "new" && hasChanged) {
       setHotspotData(INITIAL_STATE);
       document.querySelector("#panorama-img").files = createFileList([]);
       document.querySelector("#overlay").files = createFileList([]);
       document.querySelector("#narration-audio").files = createFileList([]);
+      setPano("");
+      setOverlay("");
       setHasChanged(false);
 
     }
@@ -65,16 +71,16 @@ function CreateLocation( { history } ) {
     // we add the new item to the array and set it's position
     if (id === "new") {
       const position = hotspots.length;
-      changeAnswer("hotspots", [...hotspots, { ...updatedAnswer , position } ]);
+      changeAnswer("hotspots", [...hotspots, { ...updatedAnswer, position }]);
       history.replace("/hotspot/" + position);
-    // we only need to update the existing data
+      // we only need to update the existing data
     } else {
       let old = hotspots;
       old[parseInt(id)] = updatedAnswer;
       changeAnswer("hotspots", old);
       // if a valid id and hasn't been added to the graph adjancy list with valid coordinates
       // then add it as a vertex (could warn the users here too)
-      if (!hotspotGraph.adjancyList.has(id) && old.latitude !== 0 && old.longitude !== 0) 
+      if (!hotspotGraph.adjancyList.has(id) && old.latitude !== 0 && old.longitude !== 0)
         hotspotGraph.addVertex(old, parseInt(id));
     }
   };
@@ -98,77 +104,93 @@ function CreateLocation( { history } ) {
   return (
     <div className="newConfigMain">
       <div className="pure-form pure-form-aligned">
-       <div className="pure-control-group required">
-        <label htmlFor="hotspot-name">Hotspot name</label>
-        <input
-          type="text" id="hotspot-name" placeholder="enter name"
-          value={hotspotData.name}
-          onChange={e => handleChange("name", e.target.value)}
+        <div className="pure-control-group required">
+          <label htmlFor="hotspot-name">Hotspot name</label>
+          <input
+            type="text" id="hotspot-name" placeholder="enter name"
+            value={hotspotData.name}
+            onChange={e => handleChange("name", e.target.value)}
+          />
+        </div>
+
+        <MapField
+          handleLocation={handleLocation}
+          currentLatitude={hotspotData.latitude}
+          currentLongitude={hotspotData.longitude}
         />
-      </div>
 
-      <MapField
-        handleLocation={handleLocation}
-        currentLatitude={hotspotData.latitude}
-        currentLongitude={hotspotData.longitude}
-      />
+        <div className="pure-control-group required">
+          <label htmlFor="latitude">Latitude</label>
+          <input
+            type="number" id="latitude" placeholder="enter latitude" min={-90} max={90}
+            value={hotspotData.latitude != null ? hotspotData.latitude : ""}
+            onChange={e => handleChange("latitude", e.target.value)}
+          />
+        </div>
 
-      <div className="pure-control-group required">
-        <label htmlFor="latitude">Latitude</label>
-        <input
-          type="number" id="latitude" placeholder="enter latitude" min={-90} max={90}
-          value={hotspotData.latitude != null ? hotspotData.latitude : ""}
-          onChange={e => handleChange("latitude", e.target.value)}
+        <div className="pure-control-group required">
+          <label htmlFor="longitude">Longitude</label>
+          <input
+            type="number" id="longitude" placeholder="enter longitude" min={-180} max={80}
+            value={hotspotData.longitude != null ? hotspotData.longitude : ""}
+            onChange={e => handleChange("longitude", e.target.value)}
+          />
+        </div>
+
+        {currentPano !== ""  && 
+        <>
+        <h3>Preview:</h3>
+        <Canvas id="canvas" camera={{ position: [0, 0, 1], fov: 45 }}>
+          <Suspense fallback={<Html center><p>Loading...</p></Html>}>
+            < CubeMapVR data={{ panorama_image: currentPano, overlay: currentOverlay }} tourBasePath={""} />
+          </Suspense>
+        </Canvas>
+        </>
+        }
+
+        <div className="pure-control-group">
+          <label htmlFor="overlay">Overlay image</label>
+          <input
+            type="file" id="overlay" placeholder="select image" accept="image/*"
+            onChange={e => {
+              setOverlay(URL.createObjectURL(e.target.files[0]))
+              handleChange("overlay", e.target.files[0]['name'])
+            }}
+          />
+
+        </div>
+
+
+        <div className="pure-control-group">
+          <label htmlFor="panorama-img">Panorama image</label>
+          <input
+            type="file" id="panorama-img" placeholder="select image" accept="image/*"
+            onChange={e => {
+              setPano(URL.createObjectURL(e.target.files[0]))
+              handleChange("panorama_image", e.target.files[0]['name'])
+            }}
+          />
+
+        </div>
+
+        <div className="pure-control-group">
+          <label htmlFor="narration-audio">Narration Audio</label>
+          <input
+            type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
+            onChange={e => handleChange("start_audio", e.target.files[0]['name'])}
+          />
+
+        </div>
+
+        <LibraryField
+          handleLibrary={data => handleChange("media_pages", data)}
+          libraryPages={hotspotData.media_pages}
         />
-      </div>
 
-      <div className="pure-control-group required">
-        <label htmlFor="longitude">Longitude</label>
-        <input
-          type="number" id="longitude" placeholder="enter longitude" min={-180} max={80}
-          value={hotspotData.longitude != null ? hotspotData.longitude : ""}
-          onChange={e => handleChange("longitude", e.target.value)}
+        <MenuField
+          handleMenu={data => handleChange("main_pages", data)}
+          menuItems={hotspotData.main_pages}
         />
-      </div>
-
-
-      <div className="pure-control-group">
-        <label htmlFor="overlay">Overlay image</label>
-        <input
-          type="file" id="overlay" placeholder="select image" accept="image/*"
-          onChange={e => handleChange("overlay", e.target.files[0]['name'])}
-        />
-        
-      </div>
-
-
-      <div className="pure-control-group">
-        <label htmlFor="panorama-img">Panorama image</label>
-        <input
-          type="file" id="panorama-img" placeholder="select image" accept="image/*"
-          onChange={e => handleChange("panorama_image", e.target.files[0]['name'])}
-        />
-        
-      </div>
-        
-      <div className="pure-control-group">
-        <label htmlFor="narration-audio">Narration Audio</label>
-        <input
-          type="file" id="narration-audio" placeholder="select audio" accept="audio/*"
-          onChange={e => handleChange("start_audio", e.target.files[0]['name'])}
-        />
-        
-      </div>
-
-      <LibraryField 
-        handleLibrary={data => handleChange("media_pages", data)}
-        libraryPages={hotspotData.media_pages}
-      />
-
-      <MenuField 
-        handleMenu={data => handleChange("main_pages", data)}
-        menuItems={hotspotData.main_pages}
-      />
 
       </div>
     </div>
