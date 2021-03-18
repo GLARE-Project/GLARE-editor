@@ -62,6 +62,31 @@ const Provider = ({ children }) => {
     hotspots: [],
   });
 
+  // map of hotspot panorama_image and overlay blob URLS
+  // used to keep the data persistent from one hotspot to another
+  const [hotspotImages, setHotspotImage] = useState(new Map());
+
+  const INITAL_HOTSPOT_IMAGES_VALUE = { panorama_image: undefined, overlay: undefined };
+
+  const getHotspotImages = (hotspotIndex) => {
+    if (hotspotImages.has(hotspotIndex)) return hotspotImages.get(hotspotIndex);
+    return INITAL_HOTSPOT_IMAGES_VALUE;
+  };
+
+  const changeHotspotImage = (hotspotIndex, propertytName, value) => {
+    setHotspotImage(hotspotImages => {
+      // if a value exists, only adjusts the give property
+      if (hotspotImages.has(hotspotIndex)) {
+        const previousValue = hotspotImages.get(hotspotIndex);
+        hotspotImages.set(hotspotIndex, { ...previousValue, ...{ [propertytName]: value } })
+      // otherwise make sure all required properties exists too
+      } else {
+        hotspotImages.set(hotspotIndex, { ...INITAL_HOTSPOT_IMAGES_VALUE, ...{ [propertytName]: value } });
+      }
+      return hotspotImages;
+    });
+  };
+
   const [hotspotGraph] = useState(new Graph());
 
   const changeAnswer = (propertytName, value) => {
@@ -106,7 +131,9 @@ const Provider = ({ children }) => {
       setAnswers: answers => directlyChangeAnswers(answers),
       checkValidity: () => checkValidity(),
       loadExample: () => loadExample(),
-      hotspotGraph: hotspotGraph
+      hotspotGraph: hotspotGraph,
+      getHotspotImages: (index) => getHotspotImages(index),
+      changeHotspotImage: (index, propName, val) => changeHotspotImage(index, propName, val)
     }}
     >
       {children}

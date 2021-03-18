@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Suspense } from 'react';
+import React, { useState, useContext, useEffect, Suspense, useMemo } from 'react';
 import { useParams } from "react-router-dom";
 import { CubeMapVR } from "@chrisdesigns/glare-viewer";
 import { Canvas } from 'react-three-fiber';
@@ -12,35 +12,39 @@ import './CreateLocation.css';
 
 function CreateLocation({ history }) {
 
-  const { Answers, changeAnswer, hotspotGraph } = useContext(Context);
+  const { Answers, changeAnswer, hotspotGraph, getHotspotImages, changeHotspotImage } = useContext(Context);
 
   const { hotspots } = Answers;
 
   const { id } = useParams();
 
-  const INITIAL_STATE = {
-    // location related
-    name: "",
-    position: null,
-    latitude: 0,
-    longitude: 0,
-    overlay: "",
-    isSubHotspot: false,
-    // VR related
-    panorama_image: "",
-    overlay_size: 10,
-    overlay_offset_x: 0,
-    overlay_offset_y: 0,
-    // audio related
-    start_audio: "",
-    // the links
-    main_pages: [],
-    // the library
-    media_pages: []
-  };
+  const INITIAL_STATE = useMemo(() => {
+    return {
+      // location related
+      name: "",
+      position: null,
+      latitude: 0,
+      longitude: 0,
+      overlay: "",
+      isSubHotspot: false,
+      // VR related
+      panorama_image: "",
+      overlay_size: 10,
+      overlay_offset_x: 0,
+      overlay_offset_y: 0,
+      // audio related
+      start_audio: "",
+      // the links
+      main_pages: [],
+      // the library
+      media_pages: []
+    }
+ },[]);
+
+ 
   const [hotspotData, setHotspotData] = useState(INITIAL_STATE);
-  const [currentPano, setPano] = useState("");
-  const [currentOverlay, setOverlay] = useState("");
+  const [currentPano, setPano] = useState();
+  const [currentOverlay, setOverlay] = useState();
   const [hasChanged, setHasChanged] = useState(false);
 
   // on load, if the id exists, load its data
@@ -50,6 +54,11 @@ function CreateLocation({ history }) {
     if (id !== "new" && hotspots.length > parseInt(id)) {
       const hotspotData = hotspots[parseInt(id)];
       setHotspotData(hotspotData);
+      // TODO: check to see if a blob is valid before serving it
+      // blobs can be unloaded when the document is unloaded
+      const { panorama_image, overlay } = getHotspotImages(parseInt(id));
+      setPano(panorama_image);
+      setOverlay(overlay);
       // improper way of doing it, but can't seem to set files attribute properly
       document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
       document.querySelector("#overlay").files = createFileList(hotspotData.overlay);
@@ -65,7 +74,7 @@ function CreateLocation({ history }) {
       setHasChanged(false);
 
     }
-  }, [hotspots, id, INITIAL_STATE, hasChanged]);
+  }, [hotspots, id, INITIAL_STATE, hasChanged, getHotspotImages]);
 
   const handleProjectSave = updatedAnswer => {
     // we add the new item to the array and set it's position
@@ -137,12 +146,12 @@ function CreateLocation({ history }) {
           />
         </div>
 
-        {currentPano !== ""  && 
+        {currentPano && 
         <>
         <h3>Preview:</h3>
         <Canvas id="canvas" camera={{ position: [0, 0, 1], fov: 45 }}>
           <Suspense fallback={<Html center><p>Loading...</p></Html>}>
-            < CubeMapVR data={{ panorama_image: currentPano, overlay: currentOverlay }} tourBasePath={""} />
+            < CubeMapVR data={{ panorama_image: currentPano ? currentPano : "", overlay: currentOverlay ? currentOverlay : "" }} tourBasePath={""} />
           </Suspense>
         </Canvas>
         </>
@@ -153,7 +162,9 @@ function CreateLocation({ history }) {
           <input
             type="file" id="overlay" placeholder="select image" accept="image/*"
             onChange={e => {
-              setOverlay(URL.createObjectURL(e.target.files[0]))
+              const fileBlob = URL.createObjectURL(e.target.files[0]);
+              changeHotspotImage(parseInt(id), "overlay", fileBlob);
+              setOverlay(fileBlob);
               handleChange("overlay", e.target.files[0]['name'])
             }}
           />
@@ -166,7 +177,9 @@ function CreateLocation({ history }) {
           <input
             type="file" id="panorama-img" placeholder="select image" accept="image/*"
             onChange={e => {
-              setPano(URL.createObjectURL(e.target.files[0]))
+              const fileBlob = URL.createObjectURL(e.target.files[0]);
+              changeHotspotImage(parseInt(id), "panorama_image", fileBlob);
+              setPano(fileBlob);
               handleChange("panorama_image", e.target.files[0]['name'])
             }}
           />
