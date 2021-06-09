@@ -72,9 +72,9 @@ const MapField = ({ handleLocation, currentLatitude, currentLongitude, currentMa
         <HotspotMarker color={color} position={position}/>
       </LeafletMap>
       <div className="pure-control-group">
-      <HexColorPicker color={color} onChange={changeColor} />
       <label htmlFor={"colorInput"}>Pin Hex Color:</label>
       <HexColorInput id={"colorInput"} color={color} onChange={changeColor} />
+      <HexColorPicker color={color} onChange={changeColor} />
       </div>
     </React.Fragment>
   )
