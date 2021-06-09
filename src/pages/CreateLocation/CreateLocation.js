@@ -39,9 +39,11 @@ function CreateLocation({ history }) {
       // the library
       media_pages: []
     }
- },[]);
+  }, []);
 
- 
+  // based on http://wiki.gis.com/wiki/index.php/Decimal_degrees 11.1m accuracy
+  const LongLatStep = 0.0001;
+
   const [hotspotData, setHotspotData] = useState(INITIAL_STATE);
   const [currentPano, setPano] = useState();
   const [currentOverlay, setOverlay] = useState();
@@ -110,6 +112,14 @@ function CreateLocation({ history }) {
     handleProjectSave(newAnswer);
   }
 
+  const handleColor = (color) => {
+    const newAnswer = {
+      ...hotspotData,
+      pin_color: color
+    };
+    handleProjectSave(newAnswer);
+  }
+
   return (
     <div className="newConfigMain">
       <div className="pure-form pure-form-aligned">
@@ -126,12 +136,14 @@ function CreateLocation({ history }) {
           handleLocation={handleLocation}
           currentLatitude={hotspotData.latitude}
           currentLongitude={hotspotData.longitude}
+          currentMarkerColor={hotspotData.pin_color || "add8e6"}
+          handleColor={handleColor}
         />
 
         <div className="pure-control-group required">
           <label htmlFor="latitude">Latitude</label>
           <input
-            type="number" id="latitude" placeholder="enter latitude" min={-90} max={90}
+            type="number" id="latitude" placeholder="enter latitude" min={-90} max={90} step={LongLatStep}
             value={hotspotData.latitude != null ? hotspotData.latitude : ""}
             onChange={e => handleChange("latitude", e.target.value)}
           />
@@ -140,21 +152,21 @@ function CreateLocation({ history }) {
         <div className="pure-control-group required">
           <label htmlFor="longitude">Longitude</label>
           <input
-            type="number" id="longitude" placeholder="enter longitude" min={-180} max={80}
+            type="number" id="longitude" placeholder="enter longitude" min={-180} max={80} step={LongLatStep}
             value={hotspotData.longitude != null ? hotspotData.longitude : ""}
             onChange={e => handleChange("longitude", e.target.value)}
           />
         </div>
 
-        {currentPano && 
-        <>
-        <h3>Preview:</h3>
-        <Canvas id="canvas" camera={{ position: [0, 0, 1], fov: 45 }}>
-          <Suspense fallback={<Html center><p>Loading...</p></Html>}>
-            < CubeMapVR data={{ panorama_image: currentPano ? currentPano : "", overlay: currentOverlay ? currentOverlay : "" }} tourBasePath={""} />
-          </Suspense>
-        </Canvas>
-        </>
+        {currentPano &&
+          <>
+            <h3>Preview:</h3>
+            <Canvas id="canvas" camera={{ position: [0, 0, 1], fov: 45 }}>
+              <Suspense fallback={<Html center><p>Loading...</p></Html>}>
+                < CubeMapVR data={{ panorama_image: currentPano ? currentPano : "", overlay: currentOverlay ? currentOverlay : "" }} tourBasePath={""} />
+              </Suspense>
+            </Canvas>
+          </>
         }
 
         <div className="pure-control-group">
