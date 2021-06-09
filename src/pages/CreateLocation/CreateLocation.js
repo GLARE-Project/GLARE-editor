@@ -26,6 +26,7 @@ function CreateLocation({ history }) {
       latitude: 0,
       longitude: 0,
       overlay: "",
+      virtual_object: "",
       isSubHotspot: false,
       // VR related
       panorama_image: "",
@@ -65,12 +66,14 @@ function CreateLocation({ history }) {
       document.querySelector("#panorama-img").files = createFileList(hotspotData.panorama_image);
       document.querySelector("#overlay").files = createFileList(hotspotData.overlay);
       document.querySelector("#narration-audio").files = createFileList(hotspotData.start_audio);
+      document.querySelector("#virtual-object").files = createFileList(hotspotData.virtual_object);
       setHasChanged(true);
     } else if (id === "new" && hasChanged) {
       setHotspotData(INITIAL_STATE);
       document.querySelector("#panorama-img").files = createFileList([]);
       document.querySelector("#overlay").files = createFileList([]);
       document.querySelector("#narration-audio").files = createFileList([]);
+      document.querySelector("#virtual-object").files = createFileList([]);
       setPano("");
       setOverlay("");
       setHasChanged(false);
@@ -193,6 +196,21 @@ function CreateLocation({ history }) {
               changeHotspotImage(parseInt(id), "panorama_image", fileBlob);
               setPano(fileBlob);
               handleChange("panorama_image", e.target.files[0]['name'])
+            }}
+          />
+
+        </div>
+
+
+        <div className="pure-control-group">
+          <label htmlFor="virtual-object">3D Object</label>
+          <input
+            type="file" id="virtual-object" placeholder="select object" accept=".glb"
+            onChange={e => {
+              const fileBlob = URL.createObjectURL(e.target.files[0]);
+              changeHotspotImage(parseInt(id), "virtual_object", fileBlob);
+              setOverlay(fileBlob);
+              handleChange("virtual_object", e.target.files[0]['name'])
             }}
           />
 
