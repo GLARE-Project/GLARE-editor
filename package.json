@@ -4,7 +4,9 @@
   "homepage": "https://chrisdesigns.github.io/GLARE-editor",
   "private": true,
   "dependencies": {
-    "@chrisdesigns/glare-viewer": "^1.0.2",
+    "@chrisdesigns/glare-viewer": "^1.0.0",
+    "@react-three/drei": "^6.0.3",
+    "@react-three/fiber": "^7.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -20,6 +22,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-toastify": "^6.0.8",
+    "three": "^0.129.0",
     "yup": "^0.29.3"
   },
   "scripts": {

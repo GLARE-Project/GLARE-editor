@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect, Suspense, useMemo } from 'react';
 import { useParams } from "react-router-dom";
 import { CubeMapVR } from "@chrisdesigns/glare-viewer";
-import { Canvas } from 'react-three-fiber';
-import { Html } from 'drei'
+import { Canvas } from '@react-three/fiber';
+import { Html } from '@react-three/drei'
 import MapField from "./Map/MapField";
 import LibraryField from "./Library/LibraryField";
 import MenuField from "./Menu/MenuField";
