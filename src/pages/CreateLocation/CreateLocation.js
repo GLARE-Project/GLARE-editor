@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, Suspense, useMemo } from 'react';
 import { useParams } from "react-router-dom";
-import { CubeMapVR } from "@chrisdesigns/glare-viewer";
+import { CubeMapVR } from "@glare-project/glare-viewer";
 import { Canvas } from '@react-three/fiber';
 import { Html } from '@react-three/drei'
 import MapField from "./Map/MapField";
