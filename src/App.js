@@ -23,7 +23,7 @@ const Provider = ({ children }) => {
   let librarySchema = array().of(object().shape({
     title: string().required(),
     content_type: number().required(),
-    content_items: libraryItemSchema.required()
+    content_items: libraryItemSchema.notRequired()
   }));
 
   let menuSchema = array().of(object().shape({

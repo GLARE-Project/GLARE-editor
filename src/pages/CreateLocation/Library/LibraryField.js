@@ -154,7 +154,7 @@ const LibraryField = ({ handleLibrary, libraryPages }) => {
                 </select>
             </div>
             <div className="pure-controls">
-                <button type="button" className="pure-button" onClick={createContent}>Create Content</button>
+                <button type="button" className="pure-button" onClick={createContent}>Create Library Content</button>
             </div>
 
 

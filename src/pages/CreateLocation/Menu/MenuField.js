@@ -42,10 +42,10 @@ const MenuField = ({ handleMenu, menuItems }) => {
     return (
         <>
             <div className="pure-controls">
-                <button type="button" className="pure-button" onClick={createLink}>Create Link</button>
+                <button type="button" className="pure-button" onClick={createLink}>Create Menu Link(s)</button>
             </div>
 
-            {menu.length > 0 && <legend>Menu Link</legend>}
+            {menu.length > 0 && <legend>Menu Link(s)</legend>}
 
             {menu.map((menuObj, index) => {
                 return (
